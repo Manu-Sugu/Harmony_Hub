@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Noelle Dacayo & Manu Sugunakumar">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Contact</title>
+
+    <!-- CSS Section -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="content/app.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+</head>
+<body>
+
+<header></header>
+
+<div class="text-center">
+    <h1 class="title">Contact Us</h1>
+
+    <div class="login">
+        <div class="row">
+            <div class="col">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Full Name</span>
+                    <input id="fullName" name="fullName" type="text" class="form-control"
+                           aria-describedby="Full Name" aria-label="Full Name Input" required>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Email Address</span>
+                    <input id="emailAddress" name="emailAddress" type="email" class="form-control"
+                           aria-describedby="Email Address" aria-label="Email Address Input" required>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Subject</span>
+                    <input id="subject" name="subject" type="tel" class="form-control"
+                           aria-describedby="Subject" aria-label="Subject Input">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Your Message</span>
+                    <input id="message" name="message" class="form-control" style="height: 200px;"
+                           aria-describedby="Message Area" aria-label="Message Area Input">
+                </div>
+
+                <button id="sendButton" type="submit" class="btn btn-outline-info">
+                    <i class="fa-solid fa-envelope"></i>
+                    Submit
+                </button>
+
+                <button id="cancelButton" type="reset" class="btn btn-outline-info">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Cancel
+                </button>
+            </div>
+            <div class="col main-paragraph-container">
+                <div id="map"></div>
+                <div class="row">
+                    <p class="text-center text-muted ">
+                        Address:
+                        3303 Meadow Drive, Oklahoma City, OK, 73135
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="text-center text-muted">
+                            Email:
+                            <a href="https://www.youtube.com/watch?v=nEFcbKF4WfY">scam@harmonyhub.ca</a>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p class="text-center text-muted">
+                            Phone:
+                            <a href="#">+1 (234) 567-890</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="feedbackMessageArea"></div>
+
+    <h1 class="title">We Would Love to Hear From You</h1>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-lg-6 login">
+            <div class="rating">
+                <span class="star" data-rating="5">&#9733;</span>
+                <span class="star" data-rating="4">&#9733;</span>
+                <span class="star" data-rating="3">&#9733;</span>
+                <span class="star" data-rating="2">&#9733;</span>
+                <span class="star" data-rating="1">&#9733;</span>
+                <input type="hidden" name="rating" id="rating" value="0">
+            </div>
+            <div class="input-group mb-3">
+                <textarea id="review" name="review" class="form-control" style="height: 200px;"
+                          aria-describedby="Message Area" aria-label="Review"></textarea>
+            </div>
+            <button id="reviewButton" type="submit" class="btn btn-outline-info">
+                <i class="fa-solid fa-envelope"></i>
+                Submit
+            </button>
+            <button id="cancelReviewButton" type="reset" class="btn btn-outline-info">
+                <i class="fa-solid fa-rotate-left"></i>
+                Cancel
+            </button>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactModalTitle">
+                    Thank you for submitting the form! You will be redirected in 5 seconds.
+                </h5>
+            </div>
+            <div class="modal-body">
+                <p id="modalFullName"></p><br>
+                <p id="modalEmailAddress"></p><br>
+                <p id="modalSubject"></p><br>
+                <p id="modalMessage"></p><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Error Modal -->
+<div class="modal fade" id="ContactErrorModal" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactErrorModalTitle">
+                    Error!
+                </h5>
+            </div>
+            <div class="modal-body">
+                <p>
+                    You left something blank. Please fill in everything. To close this message click anywhere
+                    outside the box.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<footer class="footer">-->
+    <nav class="footer">
+        <div id="footer">
+            <ul>
+                <li class="list-inline-item">
+                    <a class="nav-link" href="./privacypolicy.html">| Privacy Policy |</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="nav-link" href="./tos.html">| Terms of Service |</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="nav-link" href="./contact.html">| Contact |</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<!--</footer>-->
+
+<!-- Scripting Section -->
+<script src="scripts/app.js"></script>
+<script src="./node_modules/jquery/dist/jquery.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

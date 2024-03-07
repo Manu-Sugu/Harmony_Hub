@@ -1,0 +1,189 @@
+body {
+    margin: 0;
+    background-color: #fae7dc;
+}
+
+#page-container {
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+}
+
+#background-overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Styles for the video container */
+#background-overlay video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+}
+/* Styles for the main paragraph container */
+.main-paragraph-container {
+    padding: 2rem 1rem;
+    border-radius: 1rem;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Adds a shadow effect */
+}
+
+.centered-heading {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    text-align: center;
+    font-size: 53px;
+    color: #fceea4;
+    font-weight: bold;
+    font-family: 'Book Antiqua', serif;
+    padding: 20px 20px;
+
+}
+/* Title for the other pages*/
+.title{
+    font-size: 53px;
+    color: #ba7966;
+    font-weight: bold;
+    text-shadow: black;
+    font-family: 'Book Antiqua', serif;
+    text-align: center;
+}
+/* Title for the other pages*/
+.blog-title{
+    font-size: 25px;
+    color: #ba7966;
+    font-weight: bold;
+    font-family: 'Book Antiqua', serif;
+    text-align: center;
+}
+.ProjImg{
+    width: 20%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.portfolioDiv{
+    text-align: center;
+}
+
+.container {
+    padding-bottom: 40px; /* Adjust the value based on the navbar height */
+}
+.footer {
+    display: flex;
+    padding: 30px 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    justify-content: center;
+    align-items: center;
+}
+.header {
+    display: flex;
+    padding: 0 30px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.gallery {
+    padding: 10px 70px 20px;
+    transition-duration: 1s;
+}
+
+.row-padding {
+    padding: 3px;
+}
+
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+}
+
+.star {
+    display: inline-block;
+    font-size: 50px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: #ffcc00;
+}
+
+.star.selected,
+.star.selected ~ .star {
+    color: #ffcc00;
+}
+
+/*-------------------------------------------------------------------------------------------------------------*/
+/* CSS from class*/
+.input-group-addon:first-child
+{
+    border-right: 0;
+}
+
+.input-group-addon
+{
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    border: 1px solid darkgrey;
+    border-radius: 4px;
+}
+
+.input-group-addon .fa
+{
+    font-size: 18px;
+}
+
+.input-group .form-control
+{
+    position:relative;
+    z-index: 2;
+    float:left;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.input-group .form-control:last-child
+{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
+
+.login
+{
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: .3rem;
+    text-align: center;
+}
+
+.login input
+{
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: darkgrey;
+    border-radius: .4em;
+    width: 100%;
+
+}
+
+#map {
+    margin: 0 auto;
+    height: 400px;
+    width: 800px;
+}

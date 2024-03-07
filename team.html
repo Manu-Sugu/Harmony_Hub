@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Noelle Dacayo & Manu Sugunakumar">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Team</title>
+
+
+    <!-- CSS Section -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="content/app.css">
+
+</head>
+<body>
+
+    <header>
+
+    </header>
+
+    <div class="container">
+        <h1 class="title"
+        >Meet The Team!</h1>
+
+        <!--Team Grid-->
+        <div class="row">
+            <div class="col-md-3 main-paragraph-container">
+                <img src="pictures/manu.jpg"
+                     alt="Manu Sugunakumar"
+                     style="max-width: 100%; height: auto;"
+                     class="img-fluid">
+            </div>
+            <div class="col main-paragraph-container">
+                <p>
+                    Meet Manu, a determined young individual embarking on a transformative journey.
+                    Having spent a year as a security guard, Manu has decided to pursue a career in programming,
+                    driven by a deep-seated interest in technology and problem-solving. Transitioning from the watchful
+                    eyes of a security guard to the intricacies of coding, Manu brings with him a strong sense of
+                    discipline, attention to detail, and a commitment to ensuring safety—qualities honed during his
+                    time in security. Now, as he immerses himself in the world of programming, Manu envisions creating
+                    digital safeguards and innovative solutions that contribute to a secure and interconnected future.
+                    His unique blend of vigilance and newfound technical skills positions him as a promising force in
+                    the ever-evolving landscape of technology.
+                </p>
+                <!-- Modal trigger on the text -->
+                <button type="button" class="btn btn-outline-info" onclick="document.getElementById('manuModal').style.display='block'">
+                    More Details
+                </button>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 main-paragraph-container">
+                <img src="pictures/noelle.jpg"
+                     alt="Noelle Dacayo"
+                     style="max-width: 100%; height: auto;"
+                     class="img-fluid">
+            </div>
+            <div class="col main-paragraph-container">
+                <p>
+                    Meet Noelle, a spirited and ambitious individual embarking on a new chapter in her life.
+                    After dedicating five years to the artistry of cake decoration, she has decided to pivot her
+                    career path and dive into the world of programming. Noelle brings with her a unique blend of
+                    creativity from her time as a cake decorator, coupled with a newfound passion for coding and
+                    problem-solving. Excited to learn and grow, she envisions a future where she combines
+                    her artistic flair with technical expertise to create innovative and visually appealing digital
+                    solutions. Noelle's journey reflects the resilience and adaptability that comes with pursuing one's
+                    passions, as she transforms her creative skills into a valuable asset in the dynamic field of programming.
+                </p>
+                <!-- Modal trigger on the text -->
+                <button type="button" class="btn btn-outline-info" onclick="document.getElementById('noelleModal').style.display='block'">
+                    More Details
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- Modals for each team member -->
+        <div id="manuModal" class="modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Manu Sugunakumar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('manuModal').style.display='none'">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Meet Manu, a resolute young individual embarking on a transformative journey shaped by a year-long stint
+                            as a dedicated security guard. Fueled by an intrinsic curiosity for technology and a passion for unraveling
+                            complex problems, Manu has made the bold decision to pivot towards a career in programming.</p>
+
+                        <p>Having honed his skills in vigilance and meticulous attention to detail during his tenure as a security guard,
+                            Manu carries with him a unique set of qualities that seamlessly transition into the intricate realm of coding.
+                            His disciplined approach, cultivated through ensuring the safety and security of others, becomes a
+                            cornerstone as he delves into the complexities of programming.</p>
+
+                        <p>As Manu immerses himself in the dynamic world of coding, he envisions crafting digital safeguards and
+                            pioneering solutions that not only contribute to a secure digital landscape but also foster interconnectedness.
+                            The intersection of his vigilance and newfound technical prowess positions him as a promising force in the
+                            ever-evolving landscape of technology.</p>
+
+                        <p>Manu's journey embodies the spirit of adaptability and determination, proving that diverse experiences can
+                            converge to shape a future where innovation and security coalesce seamlessly. His pursuit of programming not
+                            only symbolizes personal growth but also represents a commitment to shaping a safer, technologically advanced tomorrow.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="noelleModal" class="modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Noelle Dacayo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('noelleModal').style.display='none'">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Meet Noelle, a spirited and ambitious individual stepping into a new chapter in her life filled with
+                            innovation and endless possibilities. Noelle's journey has been marked by five years dedicated to the
+                            intricate artistry of cake decoration, a period where she honed her creative prowess and developed an eye
+                            for detail that translates seamlessly into her next venture.</p>
+
+                        <p>In a bold and transformative move, Noelle has decided to pivot her career path and immerse herself in the
+                            dynamic world of programming. This shift isn't just a change of profession; it's a testament to her
+                            unwavering commitment to growth and exploration. Noelle carries with her a unique blend of creativity
+                            cultivated during her time as a cake decorator, infusing a refreshing perspective into the realm of coding.</p>
+
+                        <p>As she embarks on this exciting new journey, Noelle is driven by a newfound passion for coding and
+                            problem-solving. The marriage of her artistic flair with technical expertise becomes the cornerstone of her
+                            vision for the future. Envisioning a landscape where innovation meets aesthetics, she aspires to create
+                            digital solutions that are not only cutting-edge but also visually captivating.</p>
+
+                        <p>Noelle's story is one of resilience and adaptability, a narrative that underscores the transformative power
+                            of pursuing one's passions. She transforms her creative skills into a valuable asset, seamlessly integrating
+                            them into the fabric of the dynamic field of programming. Noelle's journey is a testament to the boundless
+                            potential that lies in the convergence of diverse talents, showcasing how the fusion of creativity and
+                            technology can lead to groundbreaking and visually stunning outcomes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<footer class="footer">-->
+    <nav class="footer">
+        <div id="footer">
+            <ul>
+                <li class="list-inline-item">
+                    <a class="nav-link" href="./privacypolicy.html">| Privacy Policy |</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="nav-link" href="./tos.html">| Terms of Service |</a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="nav-link" href="./contact.html">| Contact |</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+<!-- Scripting Section -->
+<script src="./node_modules/jquery/dist/jquery.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="scripts/app.js"></script>
+
+
+</body>
+</html>
