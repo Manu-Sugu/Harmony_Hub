@@ -6,6 +6,52 @@
 // IIFE - Immediately Invoked Functional Expression
 (function () {
 
+    function AddNavigationEvents(){
+        let navlinks = $("ul>li>a");
+
+        navlinks.off("click");
+        navlinks.off("mouseover");
+
+        navlinks.on("click", function (){
+            LoadLink($(this).attr("data"));
+        });
+
+        navlinks.on("mouseover", function (){
+            $(this).css("cursor", "pointer");
+        });
+
+        let navbarBrand = $(".navbar-brand");
+
+        navbarBrand.off("click");
+        navbarBrand.off("mouseover");
+
+        navbarBrand.on("click", function (){
+            LoadLink($(this).attr("data"));
+        });
+
+        navbarBrand.on("mouseover", function (){
+            $(this).css("cursor", "pointer");
+        });
+    }
+
+    function LoadLink(link, data = ""){
+        router.ActiveLink = link;
+        AuthGuard();
+        router.LinkData = data;
+
+        history.pushState({}, "", router.ActiveLink);
+
+        document.title = capitalizeFirstCharacter(router.ActiveLink);
+
+        $("ul>li>a").each( function() {
+            $(this).removeClass("active");
+        });
+
+        $(`li>a:contains(${document.title})`).addClass("active");
+
+        LoadContent();
+    }
+
     function redirect(page){
         window.location.href = page;
     }
@@ -657,14 +703,43 @@
         }
     }
 
-    function LoadHeader(htmlData) {
-        $("header").html(htmlData);
-        $(`li>a:contains(${document.title})`).addClass("active").attr("aria-current", "page");
-        CheckLogin();
-        $("#searchButton").on("click", (event) => {
-            event.preventDefault();// Prevent default button behavior
+    function ActiveLinkCallback(){
+        switch(router.ActiveLink){
+            case "Home": return DisplayHomePage;
+            case "Blog": return DisplayBlogPage;
+            case "Contact": return DisplayContactPage;
+            case "Portfolio": return DisplayPortfolioPage;
+            case "Services": return DisplayServicesPage;
+            case "PrivacyPolicy": return DisplayPrivacyPolicyPage;
+            case "Team": return DisplayTeamPage;
+            case "TOS": return DisplayTOSPage;
+            case "Contact List": return DisplayContactListPage;
+            case "Edit Contact": return DisplayEditPage;
+            case "Career": return DisplayCareerPage;
+            case "Login": return DisplayLoginPage;
+            case "Register": return DisplayRegisterPage;
+            case "Gallery": return DisplayGalleryPage;
+            case "Events": return DisplayEventsPage;
+            default:
+                console.error("ERROR: callback function does not exist " + router.ActiveLink);
+                return new Function();
+        }
+    }
 
-            search();
+    function capitalizeFirstCharacter(str){
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function LoadHeader(htmlData) {
+        $.get("./views/components/header.html", function(html_data)
+        {
+            $("header").html(html_data);
+            document.title = capitalizeFirstCharacter(router.ActiveLink);
+
+            $(`li > a:contains(${document.title})`).addClass("active").attr("aria-current", "page");
+
+            AddNavigationEvents();
+            CheckLogin();
         });
         $("#Careers").append(`
             <a class="nav-link" href="../../career.html"> <i class="fa-solid fa-briefcase"></i> Career</a>`);
@@ -673,58 +748,80 @@
         `);
     }
 
+    function LoadContent(){
+        let page_name = router.ActiveLink;
+        let callback = ActiveLinkCallback();
+
+        $.get(`./views/content/${page_name}.html`, function (html_data){
+            $("main").html(html_data);
+            CheckLogin();
+            callback();
+        });
+    }
+
+    function LoadFooter(){
+        $.get("./views/components/footer.html", function (html_data)
+        {
+            $("#footer").html(html_data);
+        });
+    }
+
     function Start(){
         console.log("App Started...");
 
-        AjaxRequest("GET", "./views/components/header.html", LoadHeader);
+        LoadHeader();
+        LoadContent();
+        LoadFooter();
 
-        switch(document.title){
-            case "Home":
-                DisplayHomePage();
-                break;
-            case "Blog":
-                DisplayBlogPage();
-                break;
-            case "Contact":
-                DisplayContactPage();
-                break;
-            case "Portfolio":
-                DisplayPortfolioPage();
-                break;
-            case "Services":
-                DisplayServicesPage();
-                break;
-            case "PrivacyPolicy":
-                DisplayPrivacyPolicyPage();
-                break;
-            case "Team":
-                DisplayTeamPage();
-                break;
-            case "TOS":
-                DisplayTOSPage();
-                break;
-            case "Contact List":
-                DisplayContactListPage();
-                break;
-            case "Edit Contact":
-                DisplayEditPage();
-                break;
-            case "Career":
-                DisplayCareerPage();
-                break;
-            case "Login":
-                DisplayLoginPage();
-                break;
-            case "Register":
-                DisplayRegisterPage();
-                break;
-            case "Gallery":
-                DisplayGalleryPage();
-                break;
-            case "Events":
-                DisplayEventsPage();
-                break;
-        }
+        // AjaxRequest("GET", "./views/components/header.html", LoadHeader);
+
+        // switch(document.title){
+        //     case "Home":
+        //         DisplayHomePage();
+        //         break;
+        //     case "Blog":
+        //         DisplayBlogPage();
+        //         break;
+        //     case "Contact":
+        //         DisplayContactPage();
+        //         break;
+        //     case "Portfolio":
+        //         DisplayPortfolioPage();
+        //         break;
+        //     case "Services":
+        //         DisplayServicesPage();
+        //         break;
+        //     case "PrivacyPolicy":
+        //         DisplayPrivacyPolicyPage();
+        //         break;
+        //     case "Team":
+        //         DisplayTeamPage();
+        //         break;
+        //     case "TOS":
+        //         DisplayTOSPage();
+        //         break;
+        //     case "Contact List":
+        //         DisplayContactListPage();
+        //         break;
+        //     case "Edit Contact":
+        //         DisplayEditPage();
+        //         break;
+        //     case "Career":
+        //         DisplayCareerPage();
+        //         break;
+        //     case "Login":
+        //         DisplayLoginPage();
+        //         break;
+        //     case "Register":
+        //         DisplayRegisterPage();
+        //         break;
+        //     case "Gallery":
+        //         DisplayGalleryPage();
+        //         break;
+        //     case "Events":
+        //         DisplayEventsPage();
+        //         break;
+        // }
     }
 
     window.addEventListener("load", Start);
