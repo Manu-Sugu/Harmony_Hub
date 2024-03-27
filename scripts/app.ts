@@ -32,6 +32,11 @@
 
     }
 
+    /**
+     * Sets up event listeners for navigation links found within list items or the unordered list
+     * Removes any existing click and mouseover events before re-establishing new ones to control
+     * navigation behavior and visual cues.
+     */
     function AddNavigationEvents():void{
         let navlinks = $("ul>li>a");
 
@@ -60,6 +65,12 @@
         });
     }
 
+    /**
+     * Updates the application current active link, manages authentication and updates the browsers history
+     * It also updates the navigation UI to reflect the current active link and loads the corresponding content.
+     * @param link
+     * @param data
+     */
     function LoadLink(link:string, data:string = ""){
         router.ActiveLink = link;
         AuthGuard();
