@@ -237,7 +237,8 @@
             videoElement.classList.add("video-background");
             document.addEventListener("DOMContentLoaded", function() {
                 // Append the video to the background overlay
-                document.getElementById("background-overlay").appendChild(videoElement);
+                let background = document.getElementById("background-overlay") as HTMLElement;
+                background.appendChild(videoElement);
             });
             // Add source elements for different video formats (e.g., mp4, webm)
             let videoSources =
@@ -327,10 +328,7 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-        let FullNameInput = document.getElementById('fullName');
-        let EmailAddressInput = document.getElementById('emailAddress');
-        let SubjectInput = document.getElementById('subject');
-        let MessageInput = document.getElementById('message');
+        ContactFormValidation();
 
         let SendButton = document.getElementById("sendButton") as HTMLElement;
         let ContactForm = document.getElementById("ContactForm") as HTMLElement;
@@ -338,17 +336,24 @@
         SendButton.addEventListener("click", function (event) {
             event.preventDefault(); // prevent default form submission behaviour
 
-            // trim the inputs of any blank
-            let ContactName = FullNameInput.value.trim();
-            let ContactEmail = EmailAddressInput.value.trim();
-            let ContactSubject = SubjectInput.value.trim();
-            let ContactMessage = MessageInput.value.trim();
+            let ContactName:string = document.forms[0].fullname.value;
+            let ContactSubject:string = document.forms[0].subject.value;
+            let ContactEmail:string = document.forms[0].emailAddress.value;
+            let ContactMessage:string = document.forms[0].message.value;
+
 
             if (ContactName !== "" && ContactEmail !== "" && ContactSubject !== "" && ContactMessage !== "") {
-                document.getElementById('modalFullName').textContent = `Full Name: ${ContactName}`;
-                document.getElementById('modalEmailAddress').textContent = `Email Address: ${ContactEmail}`;
-                document.getElementById('modalSubject').textContent = `Subject: ${ContactSubject}`;
-                document.getElementById('modalMessage').textContent = `Message: ${ContactMessage}`;
+                let fullName = document.getElementById('modalFullName') as HTMLElement;
+                fullName.textContent = `Full Name: ${ContactName}`;
+
+                let textContact = document.getElementById('modalEmailAddress') as HTMLElement;
+                textContact.textContent = `Email Address: ${ContactEmail}`;
+
+                let subject = document.getElementById('modalSubject') as HTMLElement;
+                subject.textContent = `Subject: ${ContactSubject}`;
+
+                let message = document.getElementById('modalMessage') as HTMLElement;
+                message.textContent = `Message: ${ContactMessage}`;
 
                 // clears the text fields
                 $("#fullName").val('');
@@ -394,7 +399,8 @@
         document.querySelectorAll('.star').forEach(function (star) {
             star.addEventListener('click', function () {
                 const rating = this.dataset.rating;
-                document.getElementById('rating').value = rating;
+                let starRating = document.getElementById('rating') as HTMLInputElement;
+                starRating.value = rating;
 
                 // Remove selected class from all stars
                 document.querySelectorAll('.star').forEach(function (star) {
@@ -402,9 +408,9 @@
                 });
 
                 // Add selected class to clicked star and all preceding stars
-                this.classList.add('selected');
-                if (this.previousElementSibling !== null){
-                    this.previousElementSibling.classList.add('selected');
+                star.classList.add('selected');
+                if (star.previousElementSibling !== null){
+                    star.previousElementSibling.classList.add('selected');
                 }
 
                 console.log('Rating selected:', rating);
@@ -466,7 +472,9 @@
             CreateProjectCard(project);
         })
 
-        function CreateProjectCard(Project){
+
+
+        function CreateProjectCard(Project: {title: string, description: string, image: string}){
             // creating div for the card
             let Card = document.createElement('div');
             Card.setAttribute("class", "portfolioDiv")
@@ -517,7 +525,7 @@
             })
         }
 
-        let LoadMoreBtn = document.getElementById("LoadMoreBtn");
+        let LoadMoreBtn = document.getElementById("LoadMoreBtn") as HTMLElement;
         LoadMoreBtn.addEventListener("click", function (){
             AddMoreProjects();
         });
@@ -538,7 +546,7 @@
         console.log("Called DisplayContactListPage...");
 
         if(localStorage.length > 0){
-            let contactList = document.getElementById("contactList");
+            let contactList = document.getElementById("contactList") as HTMLElement;
             let data = "";
 
             let index = 1;
@@ -546,7 +554,7 @@
 
             for(const key of keys){
                 let contact = new core.Contact();
-                let contactData = localStorage.getItem(key);
+                let contactData= localStorage.getItem(key) as string;
                 contact.deserialize(contactData);
                 data += `<tr><th scope="row" class="text=center">${index}</th>
                         <td>${contact.fullName}</td>
@@ -569,18 +577,18 @@
         }
 
         $("#addButton").on("click", () => {
-            location.href = "edit.html#add";
+            LoadLink("edit", "add");
         });
 
         $("button.edit").on("click", function (){
-            location.href = "edit.html#" + $(this).val();
+            LoadLink("edit", $(this).val() as string);
         });
 
         $("button.delete").on("click", function (){
             if (confirm("Confirm Delete Contact?")){
-                localStorage.removeItem($(this).val());
+                localStorage.removeItem($(this).val() as string);
             }
-            location.href="contact-list.html";
+            LoadLink("contact-list");
         });
     }
 

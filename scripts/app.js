@@ -145,7 +145,8 @@
             videoElement.setAttribute("muted", true);
             videoElement.classList.add("video-background");
             document.addEventListener("DOMContentLoaded", function () {
-                document.getElementById("background-overlay").appendChild(videoElement);
+                let background = document.getElementById("background-overlay");
+                background.appendChild(videoElement);
             });
             let videoSources = ["pictures/1655962330-1655962330-return-to-valorant-city-star-guardian-live-wallpaper.mp4"];
             videoSources.forEach(function (sourceUrl) {
@@ -211,23 +212,24 @@
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-        let FullNameInput = document.getElementById('fullName');
-        let EmailAddressInput = document.getElementById('emailAddress');
-        let SubjectInput = document.getElementById('subject');
-        let MessageInput = document.getElementById('message');
+        ContactFormValidation();
         let SendButton = document.getElementById("sendButton");
         let ContactForm = document.getElementById("ContactForm");
         SendButton.addEventListener("click", function (event) {
             event.preventDefault();
-            let ContactName = FullNameInput.value.trim();
-            let ContactEmail = EmailAddressInput.value.trim();
-            let ContactSubject = SubjectInput.value.trim();
-            let ContactMessage = MessageInput.value.trim();
+            let ContactName = document.forms[0].fullname.value;
+            let ContactSubject = document.forms[0].subject.value;
+            let ContactEmail = document.forms[0].emailAddress.value;
+            let ContactMessage = document.forms[0].message.value;
             if (ContactName !== "" && ContactEmail !== "" && ContactSubject !== "" && ContactMessage !== "") {
-                document.getElementById('modalFullName').textContent = `Full Name: ${ContactName}`;
-                document.getElementById('modalEmailAddress').textContent = `Email Address: ${ContactEmail}`;
-                document.getElementById('modalSubject').textContent = `Subject: ${ContactSubject}`;
-                document.getElementById('modalMessage').textContent = `Message: ${ContactMessage}`;
+                let fullName = document.getElementById('modalFullName');
+                fullName.textContent = `Full Name: ${ContactName}`;
+                let textContact = document.getElementById('modalEmailAddress');
+                textContact.textContent = `Email Address: ${ContactEmail}`;
+                let subject = document.getElementById('modalSubject');
+                subject.textContent = `Subject: ${ContactSubject}`;
+                let message = document.getElementById('modalMessage');
+                message.textContent = `Message: ${ContactMessage}`;
                 $("#fullName").val('');
                 $("#emailAddress").val('');
                 $("#subject").val('');
@@ -260,13 +262,14 @@
         document.querySelectorAll('.star').forEach(function (star) {
             star.addEventListener('click', function () {
                 const rating = this.dataset.rating;
-                document.getElementById('rating').value = rating;
+                let starRating = document.getElementById('rating');
+                starRating.value = rating;
                 document.querySelectorAll('.star').forEach(function (star) {
                     star.classList.remove('selected');
                 });
-                this.classList.add('selected');
-                if (this.previousElementSibling !== null) {
-                    this.previousElementSibling.classList.add('selected');
+                star.classList.add('selected');
+                if (star.previousElementSibling !== null) {
+                    star.previousElementSibling.classList.add('selected');
                 }
                 console.log('Rating selected:', rating);
             });
@@ -384,16 +387,16 @@
             contactList.innerHTML = data;
         }
         $("#addButton").on("click", () => {
-            location.href = "edit.html#add";
+            LoadLink("edit", "add");
         });
         $("button.edit").on("click", function () {
-            location.href = "edit.html#" + $(this).val();
+            LoadLink("edit", $(this).val());
         });
         $("button.delete").on("click", function () {
             if (confirm("Confirm Delete Contact?")) {
                 localStorage.removeItem($(this).val());
             }
-            location.href = "contact-list.html";
+            LoadLink("contact-list");
         });
     }
     function LoadCareer(htmlData) {
