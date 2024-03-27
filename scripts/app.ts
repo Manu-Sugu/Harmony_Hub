@@ -603,13 +603,9 @@
         });
     }
 
-    function LoadCareer(htmlData){
-        $("main").html(htmlData);
-    }
-
     function DisplayCareerPage(){
         console.log("Called DisplayCareerPage()...");
-        AjaxRequest("GET", "./views/content/careerContent.html", LoadCareer);
+        LoadLink("Career");
     }
 
     function DisplayEditPage(){
