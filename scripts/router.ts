@@ -1,16 +1,30 @@
 "use strict";
 
-(function (){
-    class Router{
+namespace core {
+    export class Router {
+        private _activeLink:string;
+        private _routingTable:string[];
+        private _linkData:string;
+
         constructor() {
-            this.ActiveLink = "";
+            this._activeLink = "";
+            this._routingTable = [];
+            this._linkData = "";
         }
 
-        get ActiveLink(){
+        public get LinkData(){
+            return this._linkData;
+        }
+
+        public set LinkData(link){
+            this._linkData = link;
+        }
+
+        public get ActiveLink() {
             return this._activeLink;
         }
 
-        set ActiveLink(link){
+        public set ActiveLink(link) {
             this._activeLink = link;
         }
 
@@ -19,7 +33,7 @@
          * @param route
          * @returns {void}
          */
-        Add(route){
+        public Add(route:string) : void {
             this._routingTable.push(route);
         }
 
@@ -28,7 +42,7 @@
          * @param routingTable
          * @returns {void}
          */
-        AddTable(routingTable){
+        public AddTable(routingTable:string[]):void {
             this._routingTable = routingTable;
         }
 
@@ -38,7 +52,7 @@
          * @param route
          * @returns {*}
          */
-        Find(route){
+        public Find(route:string) : number {
             return this._routingTable.indexOf(route);
         }
 
@@ -48,8 +62,8 @@
          * @param route
          * @returns {boolean}
          */
-        Remove(route){
-            if(this.Find(route) > -1){
+        public Remove(route : string) : boolean {
+            if (this.Find(route) > -1) {
                 this._routingTable.splice(this.Find(route), 1);
                 return true;
             }
@@ -60,15 +74,14 @@
          * This method returns the routing table contents in a comma delimited seperated string
          * @returns {string}
          */
-        toString(){
+        public toString() : string {
             return this._routingTable.toString();
         }
     }
-    core.Router = Router;
-})(core || (core = {}));
+}
 
 // Instantiate a new router
-let router = new core.Router();
+let router:core.Router = new core.Router();
 
 // Add default routes to our routing table
 router.AddTable([
@@ -90,7 +103,7 @@ router.AddTable([
     "/tos"
 ]);
 
-let route = location.pathname;
+let route:string = location.pathname;
 
 router.ActiveLink = (router.Find(route) > -1)
                     ? ( (route) === "/") ? "home" : route.substring(1)

@@ -9,5 +9,8 @@
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "jquery": "^3.7.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.29"
   }
 }
