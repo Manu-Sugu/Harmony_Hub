@@ -61,7 +61,9 @@ router.AddTable([
     "/portfolio",
     "/privacypolicy",
     "/team",
-    "/tos"
+    "/tos",
+    "/event-planning",
+    "statistic-page"
 ]);
 let route = location.pathname;
 router.ActiveLink = (router.Find(route) > -1)

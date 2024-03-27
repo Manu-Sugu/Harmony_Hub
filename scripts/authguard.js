@@ -1,11 +1,10 @@
 "use strict";
-var core;
-(function (core) {
+(function () {
     let protected_routes = ["contact-list"];
     if (protected_routes.indexOf(router.ActiveLink) > -1) {
         if (!sessionStorage.getItem("user")) {
-            location.href = "/login";
+            location.href = "login.ejs";
         }
     }
-})(core || (core = {}));
+})();
 //# sourceMappingURL=authguard.js.map

@@ -61,12 +61,6 @@
     function redirect(page) {
         window.location.href = page;
     }
-    function InitializeLightbox() {
-        lightbox.option({
-            'resizeDuration': 200,
-            'wrapAround': true
-        });
-    }
     function ShowWelcomeMessage(username) {
         $("#welcomeMessage").text(`Welcome, ${username}!`).fadeIn();
         setTimeout(function () {
@@ -141,8 +135,8 @@
         loadVideoBackground();
         function loadVideoBackground() {
             let videoElement = document.createElement("video");
-            videoElement.setAttribute("loop", true);
-            videoElement.setAttribute("muted", true);
+            videoElement.setAttribute("loop", "true");
+            videoElement.setAttribute("muted", "true");
             videoElement.classList.add("video-background");
             document.addEventListener("DOMContentLoaded", function () {
                 let background = document.getElementById("background-overlay");
@@ -258,21 +252,6 @@
             $('#feedbackMessageArea').html('');
             resetRatingStars();
             $('#review').val('');
-        });
-        document.querySelectorAll('.star').forEach(function (star) {
-            star.addEventListener('click', function () {
-                const rating = this.dataset.rating;
-                let starRating = document.getElementById('rating');
-                starRating.value = rating;
-                document.querySelectorAll('.star').forEach(function (star) {
-                    star.classList.remove('selected');
-                });
-                star.classList.add('selected');
-                if (star.previousElementSibling !== null) {
-                    star.previousElementSibling.classList.add('selected');
-                }
-                console.log('Rating selected:', rating);
-            });
         });
         function redirect() {
             window.location.href = "index.html";
@@ -399,28 +378,28 @@
             LoadLink("contact-list");
         });
     }
-    function LoadCareer(htmlData) {
-        $("main").html(htmlData);
-    }
     function DisplayCareerPage() {
         console.log("Called DisplayCareerPage()...");
-        AjaxRequest("GET", "./views/content/careerContent.html", LoadCareer);
+        LoadLink("Career");
     }
     function DisplayEditPage() {
         console.log("Called DisplayEditPage()...");
         ContactFormValidation();
-        let page = location.hash.substring(1);
+        let page = router.LinkData;
         switch (page) {
             case "add":
                 $("main>h1").text("Add Contact");
                 $("#editButton").html(`<i class="fa fa-plus fa-sm"</i> Add`);
                 $("#editButton").on("click", (event) => {
                     event.preventDefault();
-                    AddContact(fullName.value, contactNumber.value, emailAddress.value);
-                    location.href = "contact-list.html";
+                    let fullName = document.forms[0].fullname.value;
+                    let contactNumber = document.forms[0].contactNumber.value;
+                    let emailAddress = document.forms[0].emailAddress.value;
+                    AddContact(fullName, contactNumber, emailAddress);
+                    LoadLink("contact-list");
                 });
                 $("#cancelButton").on("click", () => {
-                    location.href = "contact-list.html";
+                    LoadLink("contact-list");
                 });
                 break;
             default:
@@ -452,7 +431,9 @@
             $.get("./data/users.json", function (data) {
                 for (const user of data.users) {
                     console.log(user);
-                    if (userName.value === user.Username && password.value === user.Password) {
+                    let userName = document.forms[0].username.value;
+                    let password = document.forms[0].password.value;
+                    if (userName === user.Username && password === user.Password) {
                         newUser.fromJSON(user);
                         success = true;
                         break;
@@ -483,9 +464,6 @@
     }
     function DisplayGalleryPage() {
         console.log("Called DisplayGalleryPage...");
-        document.addEventListener("DOMContentLoaded", function () {
-            InitializeLightbox();
-        });
     }
     function DisplayEventsPage() {
         console.log("Called DisplayEventsPage...");
@@ -538,7 +516,7 @@
     function capitalizeFirstCharacter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
-    function LoadHeader(htmlData) {
+    function LoadHeader() {
         $.get("./views/components/header.html", function (html_data) {
             $("header").html(html_data);
             document.title = capitalizeFirstCharacter(router.ActiveLink);
@@ -567,7 +545,7 @@
     }
     function LoadFooter() {
         $.get("./views/components/footer.html", function (html_data) {
-            $("#footer").html(html_data);
+            $("footer").html(html_data);
         });
     }
     function Start() {

@@ -2,7 +2,6 @@
 // Student ID: 1008854345       |    100748877
 // DoC: 27-Jan-2024
 "use strict";
-
 // IIFE - Immediately Invoked Functional Expression
 (function () {
 
@@ -103,20 +102,12 @@
         window.location.href = page;
     }
 
-    function InitializeLightbox() {
-        lightbox.option({
-            'resizeDuration': 200,
-            'wrapAround': true
-        });
-    }
-
     function ShowWelcomeMessage(username:string): void {
         $("#welcomeMessage").text(`Welcome, ${username}!`).fadeIn();
         setTimeout(function() {
             $("#welcomeMessage").fadeOut();
         }, 5000); // 5 seconds
     }
-
 
     function CheckLogin() {
         if (sessionStorage.getItem("user")) {
@@ -241,8 +232,8 @@
             let videoElement = document.createElement("video");
 
             // Add attributes to the video element
-            videoElement.setAttribute("loop", true);
-            videoElement.setAttribute("muted", true);
+            videoElement.setAttribute("loop", "true");
+            videoElement.setAttribute("muted", "true");
 
             // Add a class to style the video
             videoElement.classList.add("video-background");
@@ -407,26 +398,26 @@
             $('#review').val('');
         });
 
-        document.querySelectorAll('.star').forEach(function (star) {
-            star.addEventListener('click', function () {
-                const rating = this.dataset.rating;
-                let starRating = document.getElementById('rating') as HTMLInputElement;
-                starRating.value = rating;
-
-                // Remove selected class from all stars
-                document.querySelectorAll('.star').forEach(function (star) {
-                    star.classList.remove('selected');
-                });
-
-                // Add selected class to clicked star and all preceding stars
-                star.classList.add('selected');
-                if (star.previousElementSibling !== null){
-                    star.previousElementSibling.classList.add('selected');
-                }
-
-                console.log('Rating selected:', rating);
-            });
-        });
+        // document.querySelectorAll('.star').forEach(function (star) {
+        //     star.addEventListener('click', function () {
+        //         const rating = this.dataset.rating;
+        //         let starRating = document.getElementById('rating') as HTMLInputElement;
+        //         starRating.value = rating;
+        //
+        //         // Remove selected class from all stars
+        //         document.querySelectorAll('.star').forEach(function (star) {
+        //             this.classList.remove('selected');
+        //         });
+        //
+        //         // Add selected class to clicked star and all preceding stars
+        //         star.classList.add('selected');
+        //         if (this.previousElementSibling !== null){
+        //             this.previousElementSibling.classList.add('selected');
+        //         }
+        //
+        //         console.log('Rating selected:', rating);
+        //     });
+        // });
 
         // function to redirect page
         function redirect() {
@@ -613,7 +604,7 @@
 
         ContactFormValidation();
 
-        let page = location.hash.substring(1)
+        let page = router.LinkData;
         switch (page){
             case "add":
                 $("main>h1").text("Add Contact");
@@ -622,17 +613,22 @@
                 $("#editButton").on("click", (event) => {
                     // prevent form submission.
                     event.preventDefault();
-                    AddContact(fullName.value, contactNumber.value, emailAddress.value);
-                    location.href = "contact-list.html";
+
+                    let fullName:string = document.forms[0].fullname.value;
+                    let contactNumber:string = document.forms[0].contactNumber.value;
+                    let emailAddress:string = document.forms[0].emailAddress.value;
+
+                    AddContact(fullName, contactNumber, emailAddress);
+                    LoadLink("contact-list");
                 });
 
                 $("#cancelButton").on("click", () => {
-                    location.href = "contact-list.html";
+                    LoadLink("contact-list");
                 });
                 break;
             default:
                 let contact = new core.Contact();
-                contact.deserialize(localStorage.getItem(page));
+                contact.deserialize(localStorage.getItem(page) as string);
 
                 // display the contact information
                 $("#fullName").val(contact.fullName);
@@ -643,11 +639,11 @@
 
                     // Prevent the form submission
                     event.preventDefault();
-                    contact.fullName = $("#fullName").val();
-                    contact.contactNumber = $("#contactNumber").val();
-                    contact.emailAddress = $("#emailAddress").val();
+                    contact.fullName = $("#fullName").val() as string;
+                    contact.contactNumber = $("#contactNumber").val() as string;
+                    contact.emailAddress = $("#emailAddress").val() as string;
 
-                    localStorage.setItem(page, contact.serialize());
+                    localStorage.setItem(page, contact.serialize() as string);
                     location.href = "contact-list.html";
                 });
 
@@ -671,7 +667,11 @@
             $.get("./data/users.json", function(data) {
                 for(const user of data.users) {
                     console.log(user);
-                    if (userName.value === user.Username && password.value === user.Password) {
+
+                    let userName:string = document.forms[0].username.value;
+                    let password:string = document.forms[0].password.value;
+
+                    if (userName === user.Username && password === user.Password) {
                         newUser.fromJSON(user);
                         success = true;
                         break;
@@ -706,9 +706,6 @@
 
     function DisplayGalleryPage(){
         console.log("Called DisplayGalleryPage...");
-        document.addEventListener("DOMContentLoaded", function() {
-            InitializeLightbox();
-        });
     }
 
     function DisplayEventsPage(){
@@ -731,7 +728,7 @@
     }
 
     function search(){
-        let query = $("#searchInput").val().trim().toLowerCase();
+        let query = ($("#searchInput").val() as string).trim().toLowerCase();
         // Switch case to compare the input the various pages we have
         switch(query){
             case "career":
@@ -766,11 +763,11 @@
         }
     }
 
-    function capitalizeFirstCharacter(str){
+    function capitalizeFirstCharacter(str:string) : string{
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    function LoadHeader(htmlData) {
+    function LoadHeader() {
         $.get("./views/components/header.html", function(html_data)
         {
             $("header").html(html_data);
@@ -807,7 +804,7 @@
     function LoadFooter(){
         $.get("./views/components/footer.html", function (html_data)
         {
-            $("#footer").html(html_data);
+            $("footer").html(html_data);
         });
     }
 

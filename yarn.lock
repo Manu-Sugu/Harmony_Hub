@@ -21,7 +21,7 @@
 
 "@types/geojson@*":
   version "7946.0.14"
-  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.14.tgz#319b63ad6df705ee2a65a73ef042c8271e696613"
+  resolved "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.14.tgz"
   integrity sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==
 
 "@types/jquery@^3.5.29":
@@ -33,7 +33,7 @@
 
 "@types/leaflet@^1.9.4":
   version "1.9.8"
-  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.9.8.tgz#32162a8eaf305c63267e99470b9603b5883e63e8"
+  resolved "https://registry.npmjs.org/@types/leaflet/-/leaflet-1.9.8.tgz"
   integrity sha512-EXdsL4EhoUtGm2GC2ZYtXn+Fzc6pluVgagvo2VC1RHWToLGlTRwVYoDpqS/7QXa01rmDyBjJk3Catpf60VMkwg==
   dependencies:
     "@types/geojson" "*"
@@ -57,7 +57,7 @@ axios@^1.6.7:
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
-bootstrap@^5.3.3:
+bootstrap@^5.3.2:
   version "5.3.3"
   resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-5.3.3.tgz"
   integrity sha512-8HLCdWgyoMguSO9o+aH+iuZ+aht+mzW0u3HIMzVu7Srrpv7EBBxTnrFlSCskwdY1+EOFQSm7uMJhNQHkdPcmjg==
@@ -93,15 +93,15 @@ jquery@^3.7.1:
   resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
   integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
 
-lightbox2@^2.11.4:
-  version "2.11.4"
-  resolved "https://registry.npmjs.org/lightbox2/-/lightbox2-2.11.4.tgz"
-  integrity sha512-Fof7RJFWV3Fe4CWTjpto30h04Led97nRStFNLaUD/VrlEs72r7LF9WMndENYvU2e4o8WboSuy+dmetXSKSnQ2Q==
-
 lightbox@^0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/lightbox/-/lightbox-0.5.0.tgz"
   integrity sha512-BB6XoNgq+icookOeXt5BVVpEwSxslacmlrBlhsr4PpoahVOBo/lVGShyIl5nlGQ/aMFOC6ULNRUwwtjTJDE/SA==
+
+lightbox2@^2.11.4:
+  version "2.11.4"
+  resolved "https://registry.npmjs.org/lightbox2/-/lightbox2-2.11.4.tgz"
+  integrity sha512-Fof7RJFWV3Fe4CWTjpto30h04Led97nRStFNLaUD/VrlEs72r7LF9WMndENYvU2e4o8WboSuy+dmetXSKSnQ2Q==
 
 mime-db@1.52.0:
   version "1.52.0"
