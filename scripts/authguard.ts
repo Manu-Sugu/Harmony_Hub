@@ -1,12 +1,13 @@
 "use strict";
 
-namespace core {
+(function () {
 
-    let protected_routes:string[] = ["contact-list"];
+    let protected_routes = ["contact-list"];
 
-    if(protected_routes.indexOf(router.ActiveLink) > -1) {
-        if(!sessionStorage.getItem("user")) {
-            location.href = "/login";
+    if (protected_routes.indexOf(router.ActiveLink) > -1){
+        if (!sessionStorage.getItem("user")) {
+            location.href = "login.ejs";
         }
     }
-}
+
+})();
