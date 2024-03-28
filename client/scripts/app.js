@@ -243,7 +243,7 @@
             CardContainer.appendChild(Card);
         }
         function AddMoreProjects() {
-            CardContainer.innerHTML = '';
+            CardContainer.innerHTML = '<h1 class="title">Portfolio</h1>';
             Projects.forEach(project => {
                 CreateProjectCard(project);
             });

@@ -446,7 +446,7 @@
         // make function to add more projects
         function AddMoreProjects() {
             // Clears the main tag project
-            CardContainer.innerHTML = '';
+            CardContainer.innerHTML = '<h1 class="title">Portfolio</h1>';
 
             // Recreate the old project
             Projects.forEach(project => {
