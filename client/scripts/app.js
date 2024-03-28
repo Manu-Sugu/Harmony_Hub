@@ -366,9 +366,9 @@
             $.get("data/users.json", function (data) {
                 for (const user of data.user) {
                     console.log(user);
-                    let userName = document.forms[0].username.value;
+                    let username = document.forms[0].username.value;
                     let password = document.forms[0].password.value;
-                    if (userName === user.Username && password === user.Password) {
+                    if (username === user.Username && password === user.Password) {
                         newUser.fromJSON(user);
                         success = true;
                         break;
