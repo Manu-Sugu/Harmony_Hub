@@ -102,7 +102,7 @@ router.AddTable([
     "/team",
     "/tos",
     "/event-planning",
-    "statistic-page"
+    "/statistics-page"
 ]);
 
 let route:string = location.pathname;
