@@ -7,7 +7,7 @@ namespace core {
         private _userName: string;
         private _password: string;
 
-        constructor(displayName = "", emailAddress = "", userName = "", password = "") {
+        constructor(displayName :string = "", emailAddress :string = "", userName :string = "", password :string = "") {
             this._displayName = displayName;
             this._emailAddress = emailAddress;
             this._userName = userName;

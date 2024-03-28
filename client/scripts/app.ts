@@ -2,41 +2,41 @@
 // Student ID: 1008854345       |    100748877
 // DoC: 27-Jan-2024
 "use strict";
-import {Chart, ChartConfiguration, ChartData} from 'chart.js';
+// import {Chart, ChartConfiguration, ChartData} from 'chart.js';
 // IIFE - Immediately Invoked Functional Expression
 (function () {
 
-    interface DataPoint {
-        year: number;
-        count: number;
-    }
-    /**
-     * * Creates a bar chart using Chart.js.
-     * The chart represents acquisitions by year.
-     */
-    function createStatChart() {
-        // Fetch data from a local JSON file
-        fetch('data.json')
-            .then(response => response.json())
-            .then((data: DataPoint[]) => {
-                const config: ChartConfiguration<'bar', number[], string> = {
-                    type: 'bar',
-                    data: {
-                        labels: data.map(row => row.year.toString()),
-                        datasets: [{
-                            label: 'Acquisitions by year',
-                            data: data.map(row => row.count)
-                        }]
-                    }
-                };
-
-                const ctx = document.getElementById('acquisitions') as HTMLCanvasElement;
-                new Chart(ctx, config);
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    createStatChart();
+    // interface DataPoint {
+    //     year: number;
+    //     count: number;
+    // }
+    // /**
+    //  * * Creates a bar chart using Chart.js.
+    //  * The chart represents acquisitions by year.
+    //  */
+    // function createStatChart() {
+    //     // Fetch data from a local JSON file
+    //     fetch('data.json')
+    //         .then(response => response.json())
+    //         .then((data: DataPoint[]) => {
+    //             const config: ChartConfiguration<'bar', number[], string> = {
+    //                 type: 'bar',
+    //                 data: {
+    //                     labels: data.map(row => row.year.toString()),
+    //                     datasets: [{
+    //                         label: 'Acquisitions by year',
+    //                         data: data.map(row => row.count)
+    //                     }]
+    //                 }
+    //             };
+    //
+    //             const ctx = document.getElementById('acquisitions') as HTMLCanvasElement;
+    //             new Chart(ctx, config);
+    //         })
+    //         .catch(error => console.error('Error:', error));
+    // }
+    //
+    // createStatChart();
 
 
     function AuthGuard() {
@@ -47,10 +47,6 @@ import {Chart, ChartConfiguration, ChartData} from 'chart.js';
                 location.href = "/login";
             }
         }
-    }
-
-    function redirect(page: string) {
-        window.location.href = page;
     }
 
     function ShowWelcomeMessage(username: string): void {
@@ -381,7 +377,7 @@ import {Chart, ChartConfiguration, ChartData} from 'chart.js';
                     'technology-driven solution to address environmental challenges in our local community. ' +
                     'This comprehensive initiative combines community engagement, education, and the development of ' +
                     'innovative digital tools to promote eco-conscious practices and reduce our collective carbon footprint.',
-                image: 'pictures/ecotech-harmony.jpg'
+                image: '/assets/pictures/ecotech-harmony.jpg'
             },
             {
                 title: 'EcoEdu Explorers',
@@ -389,7 +385,7 @@ import {Chart, ChartConfiguration, ChartData} from 'chart.js';
                     'environmental literacy and a deep connection with nature among the younger generation. ' +
                     'This multifaceted initiative combines interactive learning experiences, community involvement, ' +
                     'and digital tools to instill a sense of environmental stewardship in the minds of children.',
-                image: 'pictures/EcoEdu Explorers.jpg'
+                image: '/assets/pictures/EcoEdu Explorers.jpg'
             }
         ]
 
@@ -400,7 +396,7 @@ import {Chart, ChartConfiguration, ChartData} from 'chart.js';
                 description: 'Harmony Health Connect is a groundbreaking project by Harmony Hub that aims to bridge the ' +
                     'gap between technology and healthcare, providing an integrated platform to enhance health outcomes ' +
                     'and foster a holistic approach to well-being within our community.',
-                image: 'pictures/Harmony Health Connect.jpg'
+                image: '/assets/pictures/Harmony Health Connect.jpg'
             }
         ]
 
@@ -604,7 +600,7 @@ import {Chart, ChartConfiguration, ChartData} from 'chart.js';
             let newUser = new core.User();
 
             $.get("./data/users.json", function (data) {
-                for (const user of data.users) {
+                for (const user of data.user) {
                     console.log(user);
 
                     let userName: string = document.forms[0].username.value;
@@ -677,7 +673,7 @@ import {Chart, ChartConfiguration, ChartData} from 'chart.js';
         // Switch case to compare the input the various pages we have
         switch (query) {
             case "career":
-                redirect('career.html');
+                location.href = "/career";
                 break;
             default:
                 console.log("No matching page found: " + query);

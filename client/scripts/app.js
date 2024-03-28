@@ -1,27 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const chart_js_1 = require("chart.js");
 (function () {
-    function createStatChart() {
-        fetch('data.json')
-            .then(response => response.json())
-            .then((data) => {
-            const config = {
-                type: 'bar',
-                data: {
-                    labels: data.map(row => row.year.toString()),
-                    datasets: [{
-                            label: 'Acquisitions by year',
-                            data: data.map(row => row.count)
-                        }]
-                }
-            };
-            const ctx = document.getElementById('acquisitions');
-            new chart_js_1.Chart(ctx, config);
-        })
-            .catch(error => console.error('Error:', error));
-    }
-    createStatChart();
     function AuthGuard() {
         let protected_routes = ["contact-list", "edit"];
         if (protected_routes.indexOf(location.pathname) > -1) {
@@ -29,9 +7,6 @@ const chart_js_1 = require("chart.js");
                 location.href = "/login";
             }
         }
-    }
-    function redirect(page) {
-        window.location.href = page;
     }
     function ShowWelcomeMessage(username) {
         $("#welcomeMessage").text(`Welcome, ${username}!`).fadeIn();
@@ -225,7 +200,7 @@ const chart_js_1 = require("chart.js");
                     'technology-driven solution to address environmental challenges in our local community. ' +
                     'This comprehensive initiative combines community engagement, education, and the development of ' +
                     'innovative digital tools to promote eco-conscious practices and reduce our collective carbon footprint.',
-                image: 'pictures/ecotech-harmony.jpg'
+                image: '/assets/pictures/ecotech-harmony.jpg'
             },
             {
                 title: 'EcoEdu Explorers',
@@ -233,7 +208,7 @@ const chart_js_1 = require("chart.js");
                     'environmental literacy and a deep connection with nature among the younger generation. ' +
                     'This multifaceted initiative combines interactive learning experiences, community involvement, ' +
                     'and digital tools to instill a sense of environmental stewardship in the minds of children.',
-                image: 'pictures/EcoEdu Explorers.jpg'
+                image: '/assets/pictures/EcoEdu Explorers.jpg'
             }
         ];
         let MoreProjects = [
@@ -242,7 +217,7 @@ const chart_js_1 = require("chart.js");
                 description: 'Harmony Health Connect is a groundbreaking project by Harmony Hub that aims to bridge the ' +
                     'gap between technology and healthcare, providing an integrated platform to enhance health outcomes ' +
                     'and foster a holistic approach to well-being within our community.',
-                image: 'pictures/Harmony Health Connect.jpg'
+                image: '/assets/pictures/Harmony Health Connect.jpg'
             }
         ];
         let CardContainer = document.getElementsByTagName("main")[0];
@@ -384,7 +359,7 @@ const chart_js_1 = require("chart.js");
             let success = false;
             let newUser = new core.User();
             $.get("./data/users.json", function (data) {
-                for (const user of data.users) {
+                for (const user of data.user) {
                     console.log(user);
                     let userName = document.forms[0].username.value;
                     let password = document.forms[0].password.value;
@@ -442,7 +417,7 @@ const chart_js_1 = require("chart.js");
         let query = $("#searchInput").val().trim().toLowerCase();
         switch (query) {
             case "career":
-                redirect('career.html');
+                location.href = "/career";
                 break;
             default:
                 console.log("No matching page found: " + query);
