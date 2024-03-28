@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Noelle Dacayo & Manu Sugunakumar">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %></title>
+
+    <!-- CSS Section -->
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="content/app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <link rel="stylesheet" href="path/to/lightbox.css">
+
+    <script src="scripts/namespace.js"></script>
+    <script src="scripts/router.js"></script>
+    <script src="scripts/user.js"></script>
+    <script src="scripts/contact.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="chart.js" type="module"></script>
+
+</head>
+<body class="d-flex flex-column min-vh-100" id="<%= page %>">
+
+<div id="page-container">
+    <header>
+        <%- include('./components/header') %>
+    </header>
+
+    <!-- Main content -->
+    <main class="container flex-grow-1">
+        <%- include('./content/' + page) %>
+    </main>
+
+    <footer>
+        <%- include('./components/footer') %>
+    </footer>
+
+</div>
+
+<!-- Scripting Section -->
+<script src="scripts/app.js"></script>
+<script src="jquery/dist/jquery.js"></script>
+<script src="bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script src="path/to/lightbox.js"></script>
+</body>
+</html>
