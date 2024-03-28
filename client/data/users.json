@@ -1,26 +1,26 @@
 {
-  "users" :
-  [
-    {
-      "DisplayName" : "Bilbo Baggins",
-      "EmailAddress" : "bilbobaggin@example.com",
-      "Username" : "bbaggins",
-      "Password" : "password"
-    },
-    {
-      "DisplayName" : "Leon Kennedy",
-      "EmailAddress" : "lkenn@example.com",
-      "Username" : "leon",
-      "Password" : "password"
-    },
-    {
-      "DisplayName" : "Admin",
-      "EmailAddress" : "admin@example.com",
-      "Username" : "admin",
-      "Password" : "password"
-    }
+  "user" :
+          [
+            {
+              "DisplayName" : "Bilbo Baggins",
+              "EmailAddress" : "bilbobaggin@example.com",
+              "Username" : "bbaggins",
+              "Password" : "password"
+            },
+            {
+              "DisplayName" : "Leon Kennedy",
+              "EmailAddress" : "lkenn@example.com",
+              "Username" : "leon",
+              "Password" : "password"
+            },
+            {
+              "DisplayName" : "Admin",
+              "EmailAddress" : "admin@example.com",
+              "Username" : "admin",
+              "Password" : "password"
+            }
 
-  ]
+          ]
 
 
 }
