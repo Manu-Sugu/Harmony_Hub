@@ -31,6 +31,14 @@
         <%- include('./components/header') %>
     </header>
 
+    <div id="background-overlay">
+        <!-- Video container -->
+        <video autoplay loop muted class="video-background">
+            <source src="assets/pictures/1655962330-1655962330-return-to-valorant-city-star-guardian-live-wallpaper.mp4"
+                    type="video/mp4">
+        </video>
+    </div>
+
     <!-- Main content -->
     <main class="container flex-grow-1">
         <%- include('./content/' + page) %>
