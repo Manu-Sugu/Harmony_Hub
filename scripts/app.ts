@@ -2,10 +2,43 @@
 // Student ID: 1008854345       |    100748877
 // DoC: 27-Jan-2024
 "use strict";
+import {Chart, ChartConfiguration, ChartData} from 'chart.js';
 // IIFE - Immediately Invoked Functional Expression
 (function () {
 
-    function AddLinkEvents(link:string):void{
+    interface DataPoint {
+        year: number;
+        count: number;
+    }
+    /**
+     * * Creates a bar chart using Chart.js.
+     * The chart represents acquisitions by year.
+     */
+    function createStatChart() {
+        // Fetch data from a local JSON file
+        fetch('data.json')
+            .then(response => response.json())
+            .then((data: DataPoint[]) => {
+                const config: ChartConfiguration<'bar', number[], string> = {
+                    type: 'bar',
+                    data: {
+                        labels: data.map(row => row.year.toString()),
+                        datasets: [{
+                            label: 'Acquisitions by year',
+                            data: data.map(row => row.count)
+                        }]
+                    }
+                };
+
+                const ctx = document.getElementById('acquisitions') as HTMLCanvasElement;
+                new Chart(ctx, config);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    createStatChart();
+
+    function AddLinkEvents(link: string): void {
         let linkquery = $(`a.link[data=${link}]`);
 
         // removes all link events from event queue
@@ -16,16 +49,16 @@
         linkquery.css("text-decoration", "underline");
         linkquery.css("color", "blue");
 
-        linkquery.on("click", function (){
+        linkquery.on("click", function () {
             LoadLink(`${link}`);
         });
 
-        linkquery.on("click", function (){
+        linkquery.on("click", function () {
             $(this).css("cursor", "pointer");
             $(this).css("font-weight", "bold");
         });
 
-        linkquery.on("mouseout", function (){
+        linkquery.on("mouseout", function () {
             $(this).css("font-weight", "normal");
         });
 
@@ -36,17 +69,17 @@
      * Removes any existing click and mouseover events before re-establishing new ones to control
      * navigation behavior and visual cues.
      */
-    function AddNavigationEvents():void{
+    function AddNavigationEvents(): void {
         let navlinks = $("ul>li>a");
 
         navlinks.off("click");
         navlinks.off("mouseover");
 
-        navlinks.on("click", function (){
+        navlinks.on("click", function () {
             LoadLink($(this).attr("data") as string);
         });
 
-        navlinks.on("mouseover", function (){
+        navlinks.on("mouseover", function () {
             $(this).css("cursor", "pointer");
         });
 
@@ -55,11 +88,11 @@
         navbarBrand.off("click");
         navbarBrand.off("mouseover");
 
-        navbarBrand.on("click", function (){
+        navbarBrand.on("click", function () {
             LoadLink($(this).attr("data") as string);
         });
 
-        navbarBrand.on("mouseover", function (){
+        navbarBrand.on("mouseover", function () {
             $(this).css("cursor", "pointer");
         });
     }
@@ -70,7 +103,7 @@
      * @param link
      * @param data
      */
-    function LoadLink(link:string, data:string = ""){
+    function LoadLink(link: string, data: string = "") {
         router.ActiveLink = link;
         AuthGuard();
         router.LinkData = data;
@@ -79,32 +112,32 @@
 
         document.title = capitalizeFirstCharacter(router.ActiveLink);
 
-        $("ul>li>a").each( function() {
+        $("ul>li>a").each(function () {
             $(this).removeClass("active");
         });
 
-        $(`li>a:contains(${document.title})`).addClass("active");
+        $(`li > a:contains(${document.title})`).addClass("active");
 
         LoadContent();
     }
 
-    function AuthGuard(){
-        let protected_routes:string[] = ["contact-list"];
+    function AuthGuard() {
+        let protected_routes: string[] = ["contact-list"];
 
-        if(protected_routes.indexOf(router.ActiveLink) > -1) {
-            if(!sessionStorage.getItem("user")) {
+        if (protected_routes.indexOf(router.ActiveLink) > -1) {
+            if (!sessionStorage.getItem("user")) {
                 router.ActiveLink = "login";
             }
         }
     }
 
-    function redirect(page:string){
+    function redirect(page: string) {
         window.location.href = page;
     }
 
-    function ShowWelcomeMessage(username:string): void {
+    function ShowWelcomeMessage(username: string): void {
         $("#welcomeMessage").text(`Welcome, ${username}!`).fadeIn();
-        setTimeout(function() {
+        setTimeout(function () {
             $("#welcomeMessage").fadeOut();
         }, 5000); // 5 seconds
     }
@@ -126,8 +159,8 @@
                 if (!sessionStorage.getItem("welcomeShown")) {
                     ShowWelcomeMessage(user.DisplayName);
                     sessionStorage.setItem("welcomeShown", "true");
-                    setTimeout(function() {
-                        $("#welcomeMessage").fadeOut("slow", function() {
+                    setTimeout(function () {
+                        $("#welcomeMessage").fadeOut("slow", function () {
                             $(this).remove();
                         });
                     }, 6000); // 6 seconds
@@ -144,7 +177,7 @@
     /**
      * Validates each field input using regular expressions with an error message
      */
-    function ContactFormValidation(){
+    function ContactFormValidation() {
         // full name
         ValidateField("#fullName",
             /^([A-Z][a-z]{1,3}.?\s)?([A-Z][a-z]+)+([\s,-]([A-z][a-z]+))*$/,
@@ -161,16 +194,16 @@
             "Please enter a valid email address");
     }
 
-    function RegisterFormValidation(){
+    function RegisterFormValidation() {
         // user name
         ValidateField("#userName",
-                  /^[a-zA-Z0-9_]+$/,
-                     "Please enter a valid user name");
+            /^[a-zA-Z0-9_]+$/,
+            "Please enter a valid user name");
 
         // first name
         ValidateField("#firstName",
-                  /^([A-Z][a-z]{1,3}.?\s)?([A-Z][a-z]+)+/,
-                     "Please enter a valid first name");
+            /^([A-Z][a-z]{1,3}.?\s)?([A-Z][a-z]+)+/,
+            "Please enter a valid first name");
 
         // last name
         ValidateField("#lastName",
@@ -189,8 +222,8 @@
 
         // password
         ValidateField("#password",
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                     "Please enter a valid password, password must contain 1 uppercase letter" +
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            "Please enter a valid password, password must contain 1 uppercase letter" +
             ", 1 lowercase letter, 1 digit, 1 special character and must be 8 characters or more.")
     }
 
@@ -200,25 +233,26 @@
      * @param regular_expression
      * @param error_message
      */
-    function ValidateField(input_field_id:string, regular_expression:RegExp, error_message:string){
+    function ValidateField(input_field_id: string, regular_expression: RegExp, error_message: string) {
         let messageArea = $("#messageArea").hide();
 
-        $(input_field_id).on("blur", function (){
-            let inputFieldText:string = $(this).val() as string;
-            if(!regular_expression.test(inputFieldText)){
+        $(input_field_id).on("blur", function () {
+            let inputFieldText: string = $(this).val() as string;
+            if (!regular_expression.test(inputFieldText)) {
                 // fail validation
                 $(this).trigger("focus").trigger("select");
                 messageArea.addClass("alert alert-danger").text(error_message).show();
-            }else{
+            } else {
                 // pass validation
                 messageArea.removeClass("class").hide();
             }
         });
     }
-    function AddContact(fullName:string, contactNumber:string, emailAddress:string){
+
+    function AddContact(fullName: string, contactNumber: string, emailAddress: string) {
         let contact = new core.Contact(fullName, contactNumber, emailAddress);
-        if(contact.serialize()){
-            let key = contact.fullName.substring(0,1) + Date.now();
+        if (contact.serialize()) {
+            let key = contact.fullName.substring(0, 1) + Date.now();
             localStorage.setItem(key, contact.serialize() as string);
         }
     }
@@ -237,7 +271,7 @@
 
             // Add a class to style the video
             videoElement.classList.add("video-background");
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
                 // Append the video to the background overlay
                 let background = document.getElementById("background-overlay") as HTMLElement;
                 background.appendChild(videoElement);
@@ -254,15 +288,16 @@
 
             // Play the video when it's fully loaded
             videoElement.addEventListener("loadeddata", function () {
-                videoElement.play().then(function() {
+                videoElement.play().then(function () {
                     // Video started playing successfully
                     console.log("Video started playing");
-                }).catch(function(error) {
+                }).catch(function (error) {
                     // Handle the error
                     console.error("Video play failed:", error.message);
                 });
             });
         }
+
         let blogNav = document.getElementById("BlogNav");
         if (blogNav) {
             let blogIcon = document.createElement("i");
@@ -297,29 +332,8 @@
 
     function DisplayHomePage() {
         console.log("Called DisplayHomePage...");
-
-        // Main content container
-        let MainContent = document.getElementsByTagName("main")[0];
-
-        // Paragraph inside a container
-        let MainParagraphContainer = document.createElement("div");
-        MainParagraphContainer.setAttribute("class", "main-paragraph-container");
-
-        let MainParagraph = document.createElement("p");
-        MainParagraph.setAttribute("id", "MainParagraph");
-        MainParagraph.setAttribute("class", "mt-3");
-        MainParagraph.textContent = `
-        Welcome to Harmony Hub – your centralized control hub for seamless entertainment and smart home experiences! 
-        We're thrilled to have you on board. Get ready to simplify your life with Harmony's intuitive features, 
-        allowing you to effortlessly manage your devices and create custom activities. 
-        
-        Whether it's turning on your home theater system or setting the perfect mood lighting, Harmony Hub is here to harmonize your home. 
-        
-        Explore, customize, and enjoy the convenience of connected living. Let the harmony begin!
-        `;
-        MainParagraphContainer.appendChild(MainParagraph);
-        MainContent.appendChild(MainParagraphContainer);
     }
+
     function DisplayContactPage() {
         console.log("Called DisplayContactPage...");
 
@@ -338,10 +352,10 @@
         SendButton.addEventListener("click", function (event) {
             event.preventDefault(); // prevent default form submission behaviour
 
-            let ContactName:string = document.forms[0].fullname.value;
-            let ContactSubject:string = document.forms[0].subject.value;
-            let ContactEmail:string = document.forms[0].emailAddress.value;
-            let ContactMessage:string = document.forms[0].message.value;
+            let ContactName: string = document.forms[0].fullname.value;
+            let ContactSubject: string = document.forms[0].subject.value;
+            let ContactEmail: string = document.forms[0].emailAddress.value;
+            let ContactMessage: string = document.forms[0].message.value;
 
 
             if (ContactName !== "" && ContactEmail !== "" && ContactSubject !== "" && ContactMessage !== "") {
@@ -371,7 +385,7 @@
             }
         });
 
-        $("#cancelButton").on("click", function (event){
+        $("#cancelButton").on("click", function (event) {
             $("#fullName").val('');
             $("#emailAddress").val('');
             $("#subject").val('');
@@ -388,7 +402,7 @@
         });
 
         // Cancel a review
-        $("#cancelReviewButton").on("click", function(event) {
+        $("#cancelReviewButton").on("click", function (event) {
             event.preventDefault();
 
             $('#feedbackMessageArea').html('');
@@ -433,38 +447,46 @@
     }
 
 
-    function DisplayServicesPage(){
+    function DisplayServicesPage() {
         console.log("Called DisplayServicePage...");
     }
-    function DisplayBlogPage(){
+
+    function DisplayBlogPage() {
         console.log("Called DisplayBlogPage...");
     }
-    function DisplayPortfolioPage(){
+
+    function DisplayPortfolioPage() {
         console.log("Called DisplayPortfolioPage...");
 
         // Storage for projects
         let Projects = [
-            { title: 'EcoTech Innovators',
+            {
+                title: 'EcoTech Innovators',
                 description: 'The EcoTech Innovators project by Harmony Hub aims to create a sustainable, ' +
                     'technology-driven solution to address environmental challenges in our local community. ' +
                     'This comprehensive initiative combines community engagement, education, and the development of ' +
                     'innovative digital tools to promote eco-conscious practices and reduce our collective carbon footprint.',
-                image: 'pictures/ecotech-harmony.jpg'},
-            { title: 'EcoEdu Explorers',
+                image: 'pictures/ecotech-harmony.jpg'
+            },
+            {
+                title: 'EcoEdu Explorers',
                 description: 'EcoEdu Explorers is a visionary project by Harmony Hub that seeks to cultivate ' +
                     'environmental literacy and a deep connection with nature among the younger generation. ' +
                     'This multifaceted initiative combines interactive learning experiences, community involvement, ' +
                     'and digital tools to instill a sense of environmental stewardship in the minds of children.',
-                image: 'pictures/EcoEdu Explorers.jpg'}
+                image: 'pictures/EcoEdu Explorers.jpg'
+            }
         ]
 
         // Storage more projects
         let MoreProjects = [
-            { title: 'Harmony Health Connect',
+            {
+                title: 'Harmony Health Connect',
                 description: 'Harmony Health Connect is a groundbreaking project by Harmony Hub that aims to bridge the ' +
                     'gap between technology and healthcare, providing an integrated platform to enhance health outcomes ' +
                     'and foster a holistic approach to well-being within our community.',
-                image: 'pictures/Harmony Health Connect.jpg'}
+                image: 'pictures/Harmony Health Connect.jpg'
+            }
         ]
 
         let CardContainer = document.getElementsByTagName("main")[0];
@@ -475,8 +497,7 @@
         })
 
 
-
-        function CreateProjectCard(Project: {title: string, description: string, image: string}){
+        function CreateProjectCard(Project: { title: string, description: string, image: string }) {
             // creating div for the card
             let Card = document.createElement('div');
             Card.setAttribute("class", "portfolioDiv")
@@ -512,7 +533,7 @@
         }
 
         // make function to add more projects
-        function AddMoreProjects(){
+        function AddMoreProjects() {
             // Clears the main tag project
             CardContainer.innerHTML = '';
 
@@ -528,35 +549,38 @@
         }
 
         let LoadMoreBtn = document.getElementById("LoadMoreBtn") as HTMLElement;
-        LoadMoreBtn.addEventListener("click", function (){
+        LoadMoreBtn.addEventListener("click", function () {
             AddMoreProjects();
         });
     }
-    function DisplayPrivacyPolicyPage(){
+
+    function DisplayPrivacyPolicyPage() {
         console.log("Called DisplayPrivacyPolicyPage...");
 
     }
-    function DisplayTeamPage(){
+
+    function DisplayTeamPage() {
         console.log("Called DisplayServicePage...");
     }
-    function DisplayTOSPage(){
+
+    function DisplayTOSPage() {
         console.log("Called DisplayServicePage...");
 
     }
 
-    function DisplayContactListPage(){
+    function DisplayContactListPage() {
         console.log("Called DisplayContactListPage...");
 
-        if(localStorage.length > 0){
+        if (localStorage.length > 0) {
             let contactList = document.getElementById("contactList") as HTMLElement;
             let data = "";
 
             let index = 1;
             let keys = Object.keys(localStorage);
 
-            for(const key of keys){
+            for (const key of keys) {
                 let contact = new core.Contact();
-                let contactData= localStorage.getItem(key) as string;
+                let contactData = localStorage.getItem(key) as string;
                 contact.deserialize(contactData);
                 data += `<tr><th scope="row" class="text=center">${index}</th>
                         <td>${contact.fullName}</td>
@@ -582,30 +606,30 @@
             LoadLink("edit", "add");
         });
 
-        $("button.edit").on("click", function (){
+        $("button.edit").on("click", function () {
             LoadLink("edit", $(this).val() as string);
         });
 
-        $("button.delete").on("click", function (){
-            if (confirm("Confirm Delete Contact?")){
+        $("button.delete").on("click", function () {
+            if (confirm("Confirm Delete Contact?")) {
                 localStorage.removeItem($(this).val() as string);
             }
             LoadLink("contact-list");
         });
     }
 
-    function DisplayCareerPage(){
+    function DisplayCareerPage() {
         console.log("Called DisplayCareerPage()...");
         LoadLink("Career");
     }
 
-    function DisplayEditPage(){
+    function DisplayEditPage() {
         console.log("Called DisplayEditPage()...");
 
         ContactFormValidation();
 
         let page = router.LinkData;
-        switch (page){
+        switch (page) {
             case "add":
                 $("main>h1").text("Add Contact");
                 $("#editButton").html(`<i class="fa fa-plus fa-sm"</i> Add`)
@@ -614,9 +638,9 @@
                     // prevent form submission.
                     event.preventDefault();
 
-                    let fullName:string = document.forms[0].fullname.value;
-                    let contactNumber:string = document.forms[0].contactNumber.value;
-                    let emailAddress:string = document.forms[0].emailAddress.value;
+                    let fullName: string = document.forms[0].fullname.value;
+                    let contactNumber: string = document.forms[0].contactNumber.value;
+                    let emailAddress: string = document.forms[0].emailAddress.value;
 
                     AddContact(fullName, contactNumber, emailAddress);
                     LoadLink("contact-list");
@@ -664,20 +688,21 @@
             let success = false;
             let newUser = new core.User();
 
-            $.get("./data/users.json", function(data) {
-                for(const user of data.users) {
+            $.get("./data/users.json", function (data) {
+                for (const user of data.users) {
                     console.log(user);
 
-                    let userName:string = document.forms[0].username.value;
-                    let password:string = document.forms[0].password.value;
+                    let userName: string = document.forms[0].username.value;
+                    let password: string = document.forms[0].password.value;
 
                     if (userName === user.Username && password === user.Password) {
                         newUser.fromJSON(user);
                         success = true;
                         break;
                     }
-                }if(success) {
-                    sessionStorage.setItem("user", JSON.stringify({ type: "user", data: newUser.toJSON() }));
+                }
+                if (success) {
+                    sessionStorage.setItem("user", JSON.stringify({type: "user", data: newUser.toJSON()}));
                     // sessionStorage.setItem("user", newUser.serialize());
                     messageArea.removeAttr("class").hide();
                     location.href = "contact-list.html";
@@ -694,24 +719,24 @@
         })
     }
 
-    function DisplayRegisterPage(){
+    function DisplayRegisterPage() {
         console.log("Called DisplayServicePage...");
 
         RegisterFormValidation();
 
-        $("#registerButton").on("click", (event) =>{
+        $("#registerButton").on("click", (event) => {
             event.preventDefault();
         });
     }
 
-    function DisplayGalleryPage(){
+    function DisplayGalleryPage() {
         console.log("Called DisplayGalleryPage...");
     }
 
-    function DisplayEventsPage(){
+    function DisplayEventsPage() {
         console.log("Called DisplayEventsPage...");
-        $.get("./data/events.json", function(data) {
-            for(const event of data.events) {
+        $.get("./data/events.json", function (data) {
+            for (const event of data.events) {
                 $("#events").append(
                     `
                     <div class="event-card">
@@ -727,10 +752,10 @@
 
     }
 
-    function search(){
+    function search() {
         let query = ($("#searchInput").val() as string).trim().toLowerCase();
         // Switch case to compare the input the various pages we have
-        switch(query){
+        switch (query) {
             case "career":
                 redirect('career.html');
                 break;
@@ -740,36 +765,50 @@
         }
     }
 
-    function ActiveLinkCallback(){
-        switch(router.ActiveLink){
-            case "Home": return DisplayHomePage;
-            case "Blog": return DisplayBlogPage;
-            case "Contact": return DisplayContactPage;
-            case "Portfolio": return DisplayPortfolioPage;
-            case "Services": return DisplayServicesPage;
-            case "PrivacyPolicy": return DisplayPrivacyPolicyPage;
-            case "Team": return DisplayTeamPage;
-            case "TOS": return DisplayTOSPage;
-            case "Contact List": return DisplayContactListPage;
-            case "Edit Contact": return DisplayEditPage;
-            case "Career": return DisplayCareerPage;
-            case "Login": return DisplayLoginPage;
-            case "Register": return DisplayRegisterPage;
-            case "Gallery": return DisplayGalleryPage;
-            case "Events": return DisplayEventsPage;
+    function ActiveLinkCallback() {
+        switch (router.ActiveLink) {
+            case "Home":
+                return DisplayHomePage;
+            case "Blog":
+                return DisplayBlogPage;
+            case "Contact":
+                return DisplayContactPage;
+            case "Portfolio":
+                return DisplayPortfolioPage;
+            case "Services":
+                return DisplayServicesPage;
+            case "PrivacyPolicy":
+                return DisplayPrivacyPolicyPage;
+            case "Team":
+                return DisplayTeamPage;
+            case "TOS":
+                return DisplayTOSPage;
+            case "Contact List":
+                return DisplayContactListPage;
+            case "Edit Contact":
+                return DisplayEditPage;
+            case "Career":
+                return DisplayCareerPage;
+            case "Login":
+                return DisplayLoginPage;
+            case "Register":
+                return DisplayRegisterPage;
+            case "Gallery":
+                return DisplayGalleryPage;
+            case "Events":
+                return DisplayEventsPage;
             default:
                 console.error("ERROR: callback function does not exist " + router.ActiveLink);
                 return new Function();
         }
     }
 
-    function capitalizeFirstCharacter(str:string) : string{
+    function capitalizeFirstCharacter(str: string): string {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     function LoadHeader() {
-        $.get("./views/components/header.html", function(html_data)
-        {
+        $.get("./views/components/header.html", function (html_data) {
             $("header").html(html_data);
             document.title = capitalizeFirstCharacter(router.ActiveLink);
 
@@ -790,25 +829,24 @@
         `);
     }
 
-    function LoadContent(){
+    function LoadContent() {
         let page_name = router.ActiveLink;
         let callback = ActiveLinkCallback();
 
-        $.get(`./views/content/${page_name}.html`, function (html_data){
+        $.get(`./views/content/${page_name}.html`, function (html_data) {
             $("main").html(html_data);
             CheckLogin();
             callback();
         });
     }
 
-    function LoadFooter(){
-        $.get("./views/components/footer.html", function (html_data)
-        {
+    function LoadFooter() {
+        $.get("./views/components/footer.html", function (html_data) {
             $("footer").html(html_data);
         });
     }
 
-    function Start(){
+    function Start() {
         console.log("App Started...");
 
         LoadHeader();
