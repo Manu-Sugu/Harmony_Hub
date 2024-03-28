@@ -10,31 +10,32 @@ import {Chart, ChartConfiguration, ChartData} from 'chart.js';
         year: number;
         count: number;
     }
-
     /**
      * * Creates a bar chart using Chart.js.
      * The chart represents acquisitions by year.
      */
     function createStatChart() {
-        const data: DataPoint[] = [
-            {year: 2023, count: 10},
-            {year: 2024, count: 20},
-        ];
+        // Fetch data from a local JSON file
+        fetch('data.json')
+            .then(response => response.json())
+            .then((data: DataPoint[]) => {
+                const config: ChartConfiguration<'bar', number[], string> = {
+                    type: 'bar',
+                    data: {
+                        labels: data.map(row => row.year.toString()),
+                        datasets: [{
+                            label: 'Acquisitions by year',
+                            data: data.map(row => row.count)
+                        }]
+                    }
+                };
 
-        const config: ChartConfiguration<'bar', number[], string> = {
-            type: 'bar',
-            data: {
-                labels: data.map(row => row.year.toString()),
-                datasets: [{
-                    label: 'Acquisitions by year',
-                    data: data.map(row => row.count)
-                }]
-            }
-        };
-
-        const ctx = document.getElementById('acquisitions') as HTMLCanvasElement;
-        new Chart(ctx, config);
+                const ctx = document.getElementById('acquisitions') as HTMLCanvasElement;
+                new Chart(ctx, config);
+            })
+            .catch(error => console.error('Error:', error));
     }
+
     createStatChart();
 
     function AddLinkEvents(link: string): void {
