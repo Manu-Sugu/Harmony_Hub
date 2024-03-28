@@ -3,6 +3,8 @@
 // DoC: 27-Jan-2024
 "use strict";
 // IIFE - Immediately Invoked Functional Expression
+
+
 (function () {
 
     interface DataPoint {
@@ -13,29 +15,32 @@
      * * Creates a bar chart using Chart.js.
      * The chart represents acquisitions by year.
      */
-    // function createStatChart() {
-    //     // Fetch data from a local JSON file
-    //     fetch('data.json')
-    //         .then(response => response.json())
-    //         .then((data: DataPoint[]) => {
-    //             const config: ChartConfiguration<'bar', number[], string> = {
-    //                 type: 'bar',
-    //                 data: {
-    //                     labels: data.map(row => row.year.toString()),
-    //                     datasets: [{
-    //                         label: 'Acquisitions by year',
-    //                         data: data.map(row => row.count)
-    //                     }]
-    //                 }
-    //             };
-    //
-    //             const ctx = document.getElementById('acquisitions') as HTMLCanvasElement;
-    //             new Chart(ctx, config);
-    //         })
-    //         .catch(error => console.error('Error:', error));
-    // }
-    //
-    // createStatChart();
+    function createStatChart() {
+        fetch('data/traffic.json')
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then((data) => {
+                const config = {
+                    type: 'bar',
+                    data: {
+                        labels: data.map((row: { year: { toString: () => any; }; }) => row.year.toString()),
+                        datasets: [{
+                            label: 'Acquisitions by year',
+                            data: data.map((row: { count: any; }) => row.count)
+                        }]
+                    }
+                };
+                const ctx = document.getElementById('acquisitions');
+                // @ts-ignore
+                new Chart(ctx, config);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    createStatChart();
+
+
 
 
     function AuthGuard() {
@@ -143,7 +148,7 @@
     }
 
     /**
-     * This funtion validates input for contact and edit pages.
+     * This function validates input for contact and edit pages.
      * @param input_field_id
      * @param regular_expression
      * @param error_message

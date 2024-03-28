@@ -1,5 +1,28 @@
 "use strict";
 (function () {
+    function createStatChart() {
+        fetch('data/traffic.json')
+            .then(response => {
+            console.log(response);
+            return response.json();
+        })
+            .then((data) => {
+            const config = {
+                type: 'bar',
+                data: {
+                    labels: data.map((row) => row.year.toString()),
+                    datasets: [{
+                            label: 'Acquisitions by year',
+                            data: data.map((row) => row.count)
+                        }]
+                }
+            };
+            const ctx = document.getElementById('acquisitions');
+            new Chart(ctx, config);
+        })
+            .catch(error => console.error('Error:', error));
+    }
+    createStatChart();
     function AuthGuard() {
         let protected_routes = ["contact-list", "edit"];
         if (protected_routes.indexOf(location.pathname) > -1) {
