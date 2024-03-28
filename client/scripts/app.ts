@@ -2,18 +2,17 @@
 // Student ID: 1008854345       |    100748877
 // DoC: 27-Jan-2024
 "use strict";
-// import {Chart, ChartConfiguration, ChartData} from 'chart.js';
 // IIFE - Immediately Invoked Functional Expression
 (function () {
 
-    // interface DataPoint {
-    //     year: number;
-    //     count: number;
-    // }
-    // /**
-    //  * * Creates a bar chart using Chart.js.
-    //  * The chart represents acquisitions by year.
-    //  */
+    interface DataPoint {
+        year: number;
+        count: number;
+    }
+    /**
+     * * Creates a bar chart using Chart.js.
+     * The chart represents acquisitions by year.
+     */
     // function createStatChart() {
     //     // Fetch data from a local JSON file
     //     fetch('data.json')
@@ -253,12 +252,12 @@
     function DisplayContactPage() {
         console.log("Called DisplayContactPage...");
 
-        // var map = L.map('map').setView([43.9396879079, -78.8914931007], 15);
-        //
-        // L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //     maxZoom: 19,
-        //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        // }).addTo(map);
+        let map = L.map('map').setView([43.9396879079, -78.8914931007], 15);
+
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
 
         ContactFormValidation();
 
@@ -599,7 +598,7 @@
             let success = false;
             let newUser = new core.User();
 
-            $.get("./data/users.json", function (data) {
+            $.get("data/users.json", function (data) {
                 for (const user of data.user) {
                     console.log(user);
 

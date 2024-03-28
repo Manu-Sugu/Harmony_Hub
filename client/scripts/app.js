@@ -133,6 +133,11 @@
     }
     function DisplayContactPage() {
         console.log("Called DisplayContactPage...");
+        let map = L.map('map').setView([43.9396879079, -78.8914931007], 15);
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
         ContactFormValidation();
         let SendButton = document.getElementById("sendButton");
         let ContactForm = document.getElementById("ContactForm");
@@ -358,7 +363,7 @@
         $("#loginButton").on("click", function () {
             let success = false;
             let newUser = new core.User();
-            $.get("./data/users.json", function (data) {
+            $.get("data/users.json", function (data) {
                 for (const user of data.user) {
                     console.log(user);
                     let userName = document.forms[0].username.value;
