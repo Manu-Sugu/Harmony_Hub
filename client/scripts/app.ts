@@ -665,6 +665,94 @@ import User = core.User;
     function DisplayEventPlanningPage(){
         console.log("Called DisplayEventPlanningPage...");
 
+        let index = 1;
+
+        $.get("./data/events.json", function (data) {
+            for (const event of data.events){
+                $("#eventList").append(
+                    `<tr><th scope="row" class="text=center">${index}</th>
+                        <td>${event.title}</td>
+                        <td>${event.date}</td>
+                        <td>${event.location}</td>
+                        <td>${event.description}</td>
+                        <td>
+                            <button value="${event.title}" class="btn btn-primary btn-sm edit">
+                                <i class="fas fa-edit fa-sm"> Edit</i>
+                            </button>
+                        </td>
+                        <td>
+                            <button value="${event.title}" class="btn btn-danger btn-sm delete">
+                                 <i class="fas fa-trash-alt fa-sm"> Delete</i>
+                            </button>
+                        </td>
+                        </tr>`
+                );
+                index++;
+            }
+        });
+
+        $("#addEventButton").on("click", () => {
+            location.href = "/event-edit#add";
+        });
+
+        $("button.edit").on("click", function () {
+            location.href = "/event-edit#" + $(this).val() as string;
+        });
+
+        $("button.delete").on("click", function () {
+            if (confirm("Confirm Delete Contact?")) {
+
+            }
+            location.href = "/event-planning";
+        });
+    }
+
+    function DisplayEventEditPage(){
+        console.log("Called DisplayEventEditPage...");
+        let page = location.hash.substring(1);
+        switch (page) {
+            case "add":
+                $("main>div>h1").text("Add Event");
+                $("#editEventButton").html(`<i class="fa fa-plus fa-sm"</i> Add`)
+
+                $("#editEventButton").on("click", (event) => {
+                    // prevent form submission.
+                    event.preventDefault();
+
+                    let eventName: string = $("#eventName").val() as string;
+                    let eventDate: string = $("#eventDate").val() as string;
+                    let eventLocation: string = $("#eventLocation").val() as string;
+                    let eventDescription: string = $("#eventDescription").val() as string;
+
+                    const newData = {
+                        title: eventName,
+                        date: eventDate,
+                        location: eventLocation,
+                        description: eventDescription
+                    }
+
+                    location.href = "/event-planning";
+                });
+
+                $("#cancelEventButton").on("click", () => {
+                    location.href = "/event-planning";
+                });
+                break;
+            default:
+
+                $("#editEventButton").on("click", (event) => {
+
+                    // Prevent the form submission
+                    event.preventDefault();
+
+                    location.href = "/event-planning";
+                });
+
+                $("#cancelEventButton").on("click", () => {
+                    location.href = "/event-planning";
+                });
+                break;
+        }
     }
 
     function DisplayStatisticsPage(){
@@ -774,6 +862,10 @@ import User = core.User;
             case "statistics":
                 AuthGuard();
                 DisplayStatisticsPage();
+                break;
+            case "event-edit":
+                AuthGuard();
+                DisplayEventEditPage();
                 break;
             case "404":
                 Display404Page();

@@ -1,0 +1,41 @@
+<div class="editEvent main-paragraph-container">
+    <h1 class="title">Edit Event</h1>
+
+    <div id="messageArea"></div>
+
+    <div class="row justify-content-lg-center g-3">
+        <form class="col-lg-6 col-md-10 col-sm-10">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Event Name</span>
+                <input id="eventName" name="eventName" type="text" class="form-control"
+                       aria-describedby="Event Name" aria-label="Event Name Input" required>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Date</span>
+                <input id="eventDate" name="eventDate" type="text" class="form-control"
+                       aria-describedby="Event Date" aria-label="Event Date Input" required>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Event Location</span>
+                <input id="eventLocation" name="eventLocation" type="text" class="form-control"
+                       aria-describedby="Event Location" aria-label="Event Location Input" required>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Event Description</span>
+                <input id="eventDescription" name="eventDescription" type="text" class="form-control"
+                       aria-describedby="Event Description" aria-label="Event Description Input" required>
+            </div>
+
+            <button id="editEventButton" type="submit" class="btn btn-outline-info"><i class="fas fa-edit fa-lg"></i> Edit
+            </button>
+            <button id="cancelEventButton" type="reset" class="btn btn-outline-info"><i class="fa-solid fa-circle-xmark"></i>
+                Cancel
+            </button>
+
+        </form>
+    </div>
+</div>

@@ -434,6 +434,75 @@ var User = core.User;
     }
     function DisplayEventPlanningPage() {
         console.log("Called DisplayEventPlanningPage...");
+        let index = 1;
+        $.get("./data/events.json", function (data) {
+            for (const event of data.events) {
+                $("#eventList").append(`<tr><th scope="row" class="text=center">${index}</th>
+                        <td>${event.title}</td>
+                        <td>${event.date}</td>
+                        <td>${event.location}</td>
+                        <td>${event.description}</td>
+                        <td>
+                            <button value="${event.title}" class="btn btn-primary btn-sm edit">
+                                <i class="fas fa-edit fa-sm"> Edit</i>
+                            </button>
+                        </td>
+                        <td>
+                            <button value="${event.title}" class="btn btn-danger btn-sm delete">
+                                 <i class="fas fa-trash-alt fa-sm"> Delete</i>
+                            </button>
+                        </td>
+                        </tr>`);
+                index++;
+            }
+        });
+        $("#addEventButton").on("click", () => {
+            location.href = "/event-edit#add";
+        });
+        $("button.edit").on("click", function () {
+            location.href = "/event-edit#" + $(this).val();
+        });
+        $("button.delete").on("click", function () {
+            if (confirm("Confirm Delete Contact?")) {
+            }
+            location.href = "/event-planning";
+        });
+    }
+    function DisplayEventEditPage() {
+        console.log("Called DisplayEventEditPage...");
+        let page = location.hash.substring(1);
+        switch (page) {
+            case "add":
+                $("main>div>h1").text("Add Event");
+                $("#editEventButton").html(`<i class="fa fa-plus fa-sm"</i> Add`);
+                $("#editEventButton").on("click", (event) => {
+                    event.preventDefault();
+                    let eventName = $("#eventName").val();
+                    let eventDate = $("#eventDate").val();
+                    let eventLocation = $("#eventLocation").val();
+                    let eventDescription = $("#eventDescription").val();
+                    const newData = {
+                        title: eventName,
+                        date: eventDate,
+                        location: eventLocation,
+                        description: eventDescription
+                    };
+                    location.href = "/event-planning";
+                });
+                $("#cancelEventButton").on("click", () => {
+                    location.href = "/event-planning";
+                });
+                break;
+            default:
+                $("#editEventButton").on("click", (event) => {
+                    event.preventDefault();
+                    location.href = "/event-planning";
+                });
+                $("#cancelEventButton").on("click", () => {
+                    location.href = "/event-planning";
+                });
+                break;
+        }
     }
     function DisplayStatisticsPage() {
         console.log("Called DisplayStatisticsPage...");
@@ -529,6 +598,10 @@ var User = core.User;
             case "statistics":
                 AuthGuard();
                 DisplayStatisticsPage();
+                break;
+            case "event-edit":
+                AuthGuard();
+                DisplayEventEditPage();
                 break;
             case "404":
                 Display404Page();

@@ -59,5 +59,8 @@ router.get('/edit', function (req, res, next) {
 router.get('/event-planning', function (req, res, next) {
     res.render('index', { title: 'Event Planning', page: "event-planning", displayName: '' });
 });
+router.get('/event-edit', function (req, res, next) {
+    res.render('index', { title: 'Event Edit', page: "event-edit", displayName: '' });
+});
 exports.default = router;
 //# sourceMappingURL=index.js.map
