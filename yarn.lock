@@ -85,6 +85,13 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
+"@types/fs-readfile-promise@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/@types/fs-readfile-promise/-/fs-readfile-promise-3.0.4.tgz"
+  integrity sha512-wr2nJWGi6+D0ofjS5bvr19HlwdCYE38+84Nf75Ojq6TBG07jNfb80NK7V7HAD/+BvBc83vJ04UCLxq42EcgF+A==
+  dependencies:
+    "@types/node" "*"
+
 "@types/geojson@*":
   version "7946.0.14"
   resolved "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.14.tgz"
@@ -108,6 +115,11 @@
   integrity sha512-EXdsL4EhoUtGm2GC2ZYtXn+Fzc6pluVgagvo2VC1RHWToLGlTRwVYoDpqS/7QXa01rmDyBjJk3Catpf60VMkwg==
   dependencies:
     "@types/geojson" "*"
+
+"@types/mime-types@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.npmjs.org/@types/mime-types/-/mime-types-2.1.4.tgz"
+  integrity sha512-lfU4b34HOri+kAY5UheuFMWPDOI+OPceBSHZKp69gEyTL/mmJ4cnU6Y/rlme3UL3GyOn6Y42hyIEw0/q8sWx5w==
 
 "@types/mime@*":
   version "3.0.4"

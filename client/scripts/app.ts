@@ -4,6 +4,7 @@
 "use strict";
 // IIFE - Immediately Invoked Functional Expression
 
+import User = core.User;
 
 (function () {
 
@@ -16,27 +17,21 @@
      * The chart represents acquisitions by year.
      */
     function createStatChart() {
-        fetch('data/traffic.json')
-            .then(response => {
-                console.log(response);
-                return response.json();
-            })
-            .then((data) => {
-                const config = {
-                    type: 'bar',
-                    data: {
-                        labels: data.map((row: { year: { toString: () => any; }; }) => row.year.toString()),
-                        datasets: [{
-                            label: 'Acquisitions by year',
-                            data: data.map((row: { count: any; }) => row.count)
-                        }]
-                    }
-                };
-                const ctx = document.getElementById('acquisitions');
-                // @ts-ignore
-                new Chart(ctx, config);
-            })
-            .catch(error => console.error('Error:', error));
+        $.get('data/traffic.json', function (data) {
+            const config = {
+                type: 'bar',
+                data: {
+                    labels: data.map((row: { year: { toString: () => any; }; }) => row.year.toString()),
+                    datasets: [{
+                        label: 'Acquisitions by year',
+                        data: data.map((row: { count: any; }) => row.count)
+                    }]
+                }
+            };
+            const ctx = document.getElementById('acquisitions');
+            // @ts-ignore
+            new Chart(ctx, config);
+        });
     }
     createStatChart();
 
@@ -535,7 +530,7 @@
 
     function DisplayCareerPage() {
         console.log("Called DisplayCareerPage()...");
-        location.href = "/career";
+
     }
 
     function DisplayEditPage() {
@@ -603,12 +598,12 @@
             let success = false;
             let newUser = new core.User();
 
-            $.get("data/users.json", function (data) {
-                for (const user of data.user) {
+            $.get("./data/users.json", function (data) {
+                for (const user of data.users) {
                     console.log(user);
 
-                    let username: string = document.forms[0].username.value;
-                    let password: string = document.forms[0].password.value;
+                    let username: string = $("#userName").val() as string;
+                    let password: string = $("#password").val() as string;
 
                     if (username === user.Username && password === user.Password) {
                         newUser.fromJSON(user);
@@ -652,7 +647,7 @@
         console.log("Called DisplayEventsPage...");
         $.get("./data/events.json", function (data) {
             for (const event of data.events) {
-                $("#events").append(
+                $("#Events").append(
                     `
                     <div class="event-card">
                         <h2>${event.title}</h2>
@@ -664,6 +659,16 @@
                 );
             }
         });
+
+    }
+
+    function DisplayEventPlanningPage(){
+        console.log("Called DisplayEventPlanningPage...");
+
+    }
+
+    function DisplayStatisticsPage(){
+        console.log("Called DisplayStatisticsPage...");
 
     }
 
@@ -685,8 +690,30 @@
         }
     }
 
+    function header(){
+        $("#searchButton").on("click", (event) => {
+            event.preventDefault();// Prevent default button behavior
+
+            search();
+        });
+        $("#Careers").append(`
+            <a class="nav-link" href="/career"> <i class="fa-solid fa-briefcase"></i> Career</a>`);
+        $("#BlogNav").html(`
+            <i class="fa-solid fa-book"></i> News
+        `);
+
+        if(sessionStorage.getItem("user")){
+            $("#Statistics").append(`
+            <a class="nav-link" href="/statistics"> <i class="fa-solid fa-chart-simple"></i> Statistics</a>`);
+            $("#Event-planning").append(`
+            <a class="nav-link" href="/event-planning"> <i class="fa-regular fa-clipboard"></i> Event Planning</a>`);
+        }
+    }
+
     function Start() {
         console.log("App Started...");
+
+        header();
 
         let page_id = $("body")[0].getAttribute("id");
 
@@ -739,6 +766,14 @@
                 break;
             case "events":
                 DisplayEventsPage();
+                break;
+            case "event-planning":
+                AuthGuard();
+                DisplayEventPlanningPage();
+                break;
+            case "statistics":
+                AuthGuard();
+                DisplayStatisticsPage();
                 break;
             case "404":
                 Display404Page();

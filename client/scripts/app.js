@@ -1,12 +1,8 @@
 "use strict";
+var User = core.User;
 (function () {
     function createStatChart() {
-        fetch('data/traffic.json')
-            .then(response => {
-            console.log(response);
-            return response.json();
-        })
-            .then((data) => {
+        $.get('data/traffic.json', function (data) {
             const config = {
                 type: 'bar',
                 data: {
@@ -19,8 +15,7 @@
             };
             const ctx = document.getElementById('acquisitions');
             new Chart(ctx, config);
-        })
-            .catch(error => console.error('Error:', error));
+        });
     }
     createStatChart();
     function AuthGuard() {
@@ -338,7 +333,6 @@
     }
     function DisplayCareerPage() {
         console.log("Called DisplayCareerPage()...");
-        location.href = "/career";
     }
     function DisplayEditPage() {
         console.log("Called DisplayEditPage()...");
@@ -386,11 +380,11 @@
         $("#loginButton").on("click", function () {
             let success = false;
             let newUser = new core.User();
-            $.get("data/users.json", function (data) {
-                for (const user of data.user) {
+            $.get("./data/users.json", function (data) {
+                for (const user of data.users) {
                     console.log(user);
-                    let username = document.forms[0].username.value;
-                    let password = document.forms[0].password.value;
+                    let username = $("#userName").val();
+                    let password = $("#password").val();
                     if (username === user.Username && password === user.Password) {
                         newUser.fromJSON(user);
                         success = true;
@@ -427,7 +421,7 @@
         console.log("Called DisplayEventsPage...");
         $.get("./data/events.json", function (data) {
             for (const event of data.events) {
-                $("#events").append(`
+                $("#Events").append(`
                     <div class="event-card">
                         <h2>${event.title}</h2>
                         <p>Date: ${event.date}</p>
@@ -437,6 +431,12 @@
                     `);
             }
         });
+    }
+    function DisplayEventPlanningPage() {
+        console.log("Called DisplayEventPlanningPage...");
+    }
+    function DisplayStatisticsPage() {
+        console.log("Called DisplayStatisticsPage...");
     }
     function Display404Page() {
         console.log("Called Display404Page...");
@@ -452,8 +452,26 @@
                 break;
         }
     }
+    function header() {
+        $("#searchButton").on("click", (event) => {
+            event.preventDefault();
+            search();
+        });
+        $("#Careers").append(`
+            <a class="nav-link" href="/career"> <i class="fa-solid fa-briefcase"></i> Career</a>`);
+        $("#BlogNav").html(`
+            <i class="fa-solid fa-book"></i> News
+        `);
+        if (sessionStorage.getItem("user")) {
+            $("#Statistics").append(`
+            <a class="nav-link" href="/statistics"> <i class="fa-solid fa-chart-simple"></i> Statistics</a>`);
+            $("#Event-planning").append(`
+            <a class="nav-link" href="/event-planning"> <i class="fa-regular fa-clipboard"></i> Event Planning</a>`);
+        }
+    }
     function Start() {
         console.log("App Started...");
+        header();
         let page_id = $("body")[0].getAttribute("id");
         CheckLogin();
         switch (page_id) {
@@ -503,6 +521,14 @@
                 break;
             case "events":
                 DisplayEventsPage();
+                break;
+            case "event-planning":
+                AuthGuard();
+                DisplayEventPlanningPage();
+                break;
+            case "statistics":
+                AuthGuard();
+                DisplayStatisticsPage();
                 break;
             case "404":
                 Display404Page();
