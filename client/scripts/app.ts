@@ -4,14 +4,13 @@
 "use strict";
 // IIFE - Immediately Invoked Functional Expression
 
-import User = core.User;
-
 (function () {
 
     interface DataPoint {
         year: number;
         count: number;
     }
+
     /**
      * * Creates a bar chart using Chart.js.
      * The chart represents acquisitions by year.
@@ -33,9 +32,8 @@ import User = core.User;
             new Chart(ctx, config);
         });
     }
+
     createStatChart();
-
-
 
 
     function AuthGuard() {
@@ -662,13 +660,13 @@ import User = core.User;
 
     }
 
-    function DisplayEventPlanningPage(){
+    function DisplayEventPlanningPage() {
         console.log("Called DisplayEventPlanningPage...");
 
         let index = 1;
 
         $.get("./data/events.json", function (data) {
-            for (const event of data.events){
+            for (const event of data.events) {
                 $("#eventList").append(
                     `<tr><th scope="row" class="text=center">${index}</th>
                         <td>${event.title}</td>
@@ -707,7 +705,7 @@ import User = core.User;
         });
     }
 
-    function DisplayEventEditPage(){
+    function DisplayEventEditPage() {
         console.log("Called DisplayEventEditPage...");
         let page = location.hash.substring(1);
         switch (page) {
@@ -755,12 +753,12 @@ import User = core.User;
         }
     }
 
-    function DisplayStatisticsPage(){
+    function DisplayStatisticsPage() {
         console.log("Called DisplayStatisticsPage...");
 
     }
 
-    function Display404Page(){
+    function Display404Page() {
         console.log("Called Display404Page...");
 
     }
@@ -778,7 +776,7 @@ import User = core.User;
         }
     }
 
-    function header(){
+    function header() {
         $("#searchButton").on("click", (event) => {
             event.preventDefault();// Prevent default button behavior
 
@@ -790,7 +788,7 @@ import User = core.User;
             <i class="fa-solid fa-book"></i> News
         `);
 
-        if(sessionStorage.getItem("user")){
+        if (sessionStorage.getItem("user")) {
             $("#Statistics").append(`
             <a class="nav-link" href="/statistics"> <i class="fa-solid fa-chart-simple"></i> Statistics</a>`);
             $("#Event-planning").append(`
