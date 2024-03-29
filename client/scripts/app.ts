@@ -517,7 +517,7 @@ import User = core.User;
         });
 
         $("button.edit").on("click", function () {
-            location.href = "/edit" + $(this).val() as string;
+            location.href = "/edit#" + $(this).val() as string;
         });
 
         $("button.delete").on("click", function () {
@@ -538,19 +538,19 @@ import User = core.User;
 
         ContactFormValidation();
 
-        let page = router.LinkData;
+        let page = location.hash.substring(1);
         switch (page) {
             case "add":
-                $("main>h1").text("Add Contact");
+                $("main>div>h1").text("Add Contact");
                 $("#editButton").html(`<i class="fa fa-plus fa-sm"</i> Add`)
 
                 $("#editButton").on("click", (event) => {
                     // prevent form submission.
                     event.preventDefault();
 
-                    let fullName: string = document.forms[0].fullname.value;
-                    let contactNumber: string = document.forms[0].contactNumber.value;
-                    let emailAddress: string = document.forms[0].emailAddress.value;
+                    let fullName: string = $("#fullName").val() as string;
+                    let contactNumber: string = $("#contactNumber").val() as string;
+                    let emailAddress: string = $("#emailAddress").val() as string;
 
                     AddContact(fullName, contactNumber, emailAddress);
                     location.href = "/contact-list";

@@ -322,7 +322,7 @@ var User = core.User;
             location.href = "/edit#add";
         });
         $("button.edit").on("click", function () {
-            location.href = "/edit" + $(this).val();
+            location.href = "/edit#" + $(this).val();
         });
         $("button.delete").on("click", function () {
             if (confirm("Confirm Delete Contact?")) {
@@ -337,16 +337,16 @@ var User = core.User;
     function DisplayEditPage() {
         console.log("Called DisplayEditPage()...");
         ContactFormValidation();
-        let page = router.LinkData;
+        let page = location.hash.substring(1);
         switch (page) {
             case "add":
-                $("main>h1").text("Add Contact");
+                $("main>div>h1").text("Add Contact");
                 $("#editButton").html(`<i class="fa fa-plus fa-sm"</i> Add`);
                 $("#editButton").on("click", (event) => {
                     event.preventDefault();
-                    let fullName = document.forms[0].fullname.value;
-                    let contactNumber = document.forms[0].contactNumber.value;
-                    let emailAddress = document.forms[0].emailAddress.value;
+                    let fullName = $("#fullName").val();
+                    let contactNumber = $("#contactNumber").val();
+                    let emailAddress = $("#emailAddress").val();
                     AddContact(fullName, contactNumber, emailAddress);
                     location.href = "/contact-list";
                 });
